@@ -1,16 +1,9 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState, useEffect} from 'react';
 
-import {
-  Provider as PaperProvider,
-  MD3LightTheme,
-  MD3DarkTheme,
-  adaptNavigationTheme,
-} from 'react-native-paper';
-import {
-  NavigationContainer,
-  DarkTheme as NavigationDarkTheme,
-  DefaultTheme as NavigationDefaultTheme,
-} from '@react-navigation/native';
+import {Provider as PaperProvider} from 'react-native-paper';
+import {NavigationContainer} from '@react-navigation/native';
+
+import {CombinedDefaultTheme, CombinedDarkTheme} from './src/style/Theme';
 
 import {PreferencesContext} from './src/contexts/PreferenceContext';
 
@@ -20,32 +13,16 @@ import {type StackParamList} from './src/navigation/NavigationTypes';
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
 
+import {type FirebaseAuthTypes} from '@react-native-firebase/auth';
+import {subscribe} from './src/services/auth/Auth';
+import Main from './src/pages/Main';
+
 const Stack = createNativeStackNavigator<StackParamList>();
 
 function App(): JSX.Element {
   const [isThemeDark, setIsThemeDark] = useState(false);
-
-  const {LightTheme, DarkTheme} = adaptNavigationTheme({
-    reactNavigationLight: NavigationDefaultTheme,
-    reactNavigationDark: NavigationDarkTheme,
-  });
-
-  const CombinedDefaultTheme = {
-    ...MD3LightTheme,
-    ...LightTheme,
-    colors: {
-      ...MD3LightTheme.colors,
-      ...LightTheme.colors,
-    },
-  };
-  const CombinedDarkTheme = {
-    ...MD3DarkTheme,
-    ...DarkTheme,
-    colors: {
-      ...MD3DarkTheme.colors,
-      ...DarkTheme.colors,
-    },
-  };
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
   const theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
 
@@ -62,13 +39,41 @@ function App(): JSX.Element {
     [toggleTheme, isThemeDark],
   );
 
+  function onAuthStateChanged(user: FirebaseAuthTypes.User | null): void {
+    setUser(user);
+    if (initializing) {
+      setInitializing(false);
+    }
+  }
+
+  useEffect(() => {
+    const subscriber = subscribe(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
   return (
     <PreferencesContext.Provider value={preferences}>
       <PaperProvider theme={theme}>
         <NavigationContainer theme={theme}>
-          <Stack.Navigator initialRouteName="SignUp">
-            <Stack.Screen name="SignUp" component={SignUp} />
-            <Stack.Screen name="SignIn" component={SignIn} />
+          <Stack.Navigator initialRouteName="SignIn">
+            {user === null ? (
+              <>
+                <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen
+                  name="SignIn"
+                  component={SignIn}
+                  options={{headerShown: false}}
+                />
+              </>
+            ) : (
+              <>
+                <Stack.Screen
+                  name="Main"
+                  component={Main}
+                  options={{headerShown: false}}
+                />
+              </>
+            )}
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

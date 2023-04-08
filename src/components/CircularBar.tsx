@@ -4,7 +4,7 @@ import {View, Animated} from 'react-native';
 import {clamp, range} from '../util/Interpolate';
 import Icon from 'react-native-paper/src/components/Icon';
 
-interface CircularBarProps {
+export interface CircularBarProps {
   radius: number;
   strokeWidth: number;
   color: string;
@@ -16,6 +16,8 @@ interface CircularBarProps {
   delay: number;
   hasIcon: boolean;
   iconName: string;
+  iconSize: number;
+  style?: any;
 }
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -66,6 +68,7 @@ function CircularBar(props: CircularBarProps): JSX.Element {
         height: size,
         justifyContent: 'center',
         alignContent: 'center',
+        ...props.style,
       }}>
       <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         <G rotation="-90" origin={`${size / 2}, ${size / 2}`}>
@@ -101,7 +104,7 @@ function CircularBar(props: CircularBarProps): JSX.Element {
             marginBottom: 'auto',
           }}>
           <Icon
-            size={props.radius}
+            size={clamp(props.iconSize, 0, props.radius)}
             source={props.iconName}
             color={props.color}
           />

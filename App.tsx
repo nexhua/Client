@@ -58,7 +58,11 @@ function App(): JSX.Element {
           <Stack.Navigator initialRouteName="SignIn">
             {user === null ? (
               <>
-                <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen
+                  name="SignUp"
+                  component={SignUp}
+                  options={{title: 'Sign Up', headerTitleAlign: 'center'}}
+                />
                 <Stack.Screen
                   name="SignIn"
                   component={SignIn}

@@ -7,8 +7,6 @@ const configure = (): void => {
     webClientId:
       '645068528921-revl5j26jj8sbrnlmea8t0425bfeeenf.apps.googleusercontent.com',
   });
-
-  console.log('Configuration success.');
 };
 
 configure();

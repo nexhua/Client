@@ -12,44 +12,6 @@ function SignIn({route, navigation}: SignInProps): JSX.Element {
 
   const theme = useAppTheme();
 
-  const style = StyleSheet.create({
-    view: {
-      height: '100%',
-      justifyContent: 'center',
-      alignContent: 'center',
-    },
-    text: {
-      textAlign: 'center',
-      marginVertical: '1%',
-    },
-    google: {
-      width: '50%',
-      alignSelf: 'center',
-      marginVertical: '1%',
-    },
-    input: {
-      width: '75%',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      marginVertical: '1%',
-    },
-    signIn: {
-      width: '75%',
-      alignSelf: 'center',
-      borderRadius: 5,
-    },
-    signUp: {
-      justifyContent: 'center',
-      alignContent: 'center',
-      flexDirection: 'row',
-      marginTop: '1%',
-    },
-    textVertical: {
-      textAlign: 'center',
-      textAlignVertical: 'center',
-    },
-  });
-
   function onSubmit(): void {
     // TODO: Sign In
     console.log(email, password);
@@ -152,5 +114,43 @@ function SignIn({route, navigation}: SignInProps): JSX.Element {
     </View>
   );
 }
+
+const style = StyleSheet.create({
+  view: {
+    height: '100%',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  text: {
+    textAlign: 'center',
+    marginVertical: '1%',
+  },
+  google: {
+    width: '50%',
+    alignSelf: 'center',
+    marginVertical: '1%',
+  },
+  input: {
+    width: '75%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginVertical: '1%',
+  },
+  signIn: {
+    width: '75%',
+    alignSelf: 'center',
+    borderRadius: 5,
+  },
+  signUp: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    marginTop: '1%',
+  },
+  textVertical: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+});
 
 export default SignIn;

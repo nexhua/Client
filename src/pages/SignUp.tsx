@@ -1,44 +1,38 @@
 import React, {useState} from 'react';
-import {Button, Text, TextInput} from 'react-native-paper';
+import {
+  Button,
+  HelperText,
+  Snackbar,
+  Text,
+  TextInput,
+} from 'react-native-paper';
 import {type SignUpProps} from '../navigation/NavigationTypes';
 import {StyleSheet, View} from 'react-native';
 import {useAppTheme} from '../style/Theme';
 import {SignUpWithEmail, getUser} from '../services/auth/Auth';
 import {type FirebaseAuthError} from '../types/firebase/Firebase';
 
+const errorCodes = {
+  noError: -1,
+  emptyPassword: 0,
+  insufficientLength: 1,
+  noUpperCase: 2,
+  noNumber: 3,
+  missingRepeatMatch: 10,
+  emptyRepeat: 11,
+  emptyEmail: 20,
+  invalidEmail: 21,
+};
+
 function SignUp({route, navigation}: SignUpProps): JSX.Element {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordRepeat, setPasswordRepeat] = useState('');
-  const theme = useAppTheme();
+  const [passwordCheck, setPasswordCheck] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
 
-  const style = StyleSheet.create({
-    view: {
-      minHeight: '100%',
-      justifyContent: 'center',
-      alignContent: 'center',
-      marginHorizontal: '5%',
-    },
-    text: {
-      textAlign: 'center',
-      marginVertical: '1%',
-    },
-    signUp: {
-      width: '100%',
-      borderRadius: 5,
-      marginVertical: '2%',
-    },
-    signIn: {
-      justifyContent: 'center',
-      alignContent: 'center',
-      flexDirection: 'row',
-      marginTop: '1%',
-    },
-    textVertical: {
-      textAlign: 'center',
-      textAlignVertical: 'center',
-    },
-  });
+  const theme = useAppTheme();
 
   function onSignUpSuccess(): void {
     const user = getUser();
@@ -50,19 +44,58 @@ function SignUp({route, navigation}: SignUpProps): JSX.Element {
     if (error !== null) {
       console.log(error);
     }
+
+    setSnackbarVisible(true);
   }
 
   function onSubmit(): void {
+    setSubmitted(true);
+
+    const emailErr = checkEmailConstraints(email);
+    const passwordErr = checkPasswordConstraints(password);
+    const repeatErr = checkPasswordRepeatConstraints(passwordRepeat);
+
+    console.log(emailErr, passwordErr, repeatErr);
+
     if (
-      email !== '' &&
-      password !== '' &&
-      passwordRepeat !== '' &&
-      password === passwordRepeat
+      emailErr === errorCodes.noError &&
+      passwordErr === errorCodes.noError &&
+      repeatErr === errorCodes.noError
     ) {
       console.log(email, password, passwordRepeat);
       SignUpWithEmail(email, password, onSignUpSuccess, onSignUpError);
     }
   }
+
+  function checkPasswordConstraints(text: string): number {
+    const [errorCount, errorCode] = countPasswordErrors(text);
+
+    return errorCode;
+  }
+
+  function checkEmailConstraints(text: string): number {
+    if (text === '') {
+      return errorCodes.emptyEmail;
+    }
+
+    return errorCodes.noError;
+  }
+
+  function checkPasswordRepeatConstraints(text: string): number {
+    if (text === '') {
+      return errorCodes.emptyRepeat;
+    }
+
+    if (password !== text) {
+      return errorCodes.missingRepeatMatch;
+    }
+
+    return errorCodes.noError;
+  }
+
+  const emailErr = checkEmailConstraints(email);
+  const passwordErr = checkPasswordConstraints(password);
+  const repeatErr = checkPasswordRepeatConstraints(passwordRepeat);
 
   return (
     <View style={style.view}>
@@ -78,25 +111,59 @@ function SignUp({route, navigation}: SignUpProps): JSX.Element {
         mode="outlined"
         placeholder="Email"
         onChangeText={text => {
+          setSubmitted(false);
           setEmail(text);
         }}
       />
+      {submitted && emailErr === errorCodes.emptyEmail && (
+        <HelperText type="error">{getErrorMsg(emailErr)}</HelperText>
+      )}
       <TextInput
         secureTextEntry={true}
         mode="outlined"
         placeholder="Password"
         onChangeText={text => {
+          const [errorCount] = countPasswordErrors(text);
+          setSubmitted(false);
           setPassword(text);
+          setPasswordCheck(errorCount);
         }}
       />
+      {submitted && passwordErr >= 0 && passwordErr < 10 && (
+        <HelperText type="error">{getErrorMsg(passwordErr)}</HelperText>
+      )}
+      <View style={style.passwordContainer}>
+        {new Array(4).fill(null).map((_, i) => {
+          return (
+            <View
+              key={i}
+              style={{
+                ...style.passwordElem,
+                marginRight: i === 3 ? 0 : '3%',
+                backgroundColor:
+                  i < passwordCheck
+                    ? style.passwordElem.backgroundColor
+                    : theme.colors.outline,
+              }}></View>
+          );
+        })}
+      </View>
+      <Text variant="labelMedium" style={{color: theme.colors.muted}}>
+        Password should have at least 6 characters, a letter, a number and
+        uppercase letter
+      </Text>
       <TextInput
         secureTextEntry={true}
         mode="outlined"
         placeholder="Repeat Password"
         onChangeText={text => {
+          setSubmitted(false);
           setPasswordRepeat(text);
         }}
       />
+      {submitted && repeatErr >= 10 && repeatErr < 20 && (
+        <HelperText type="error">{getErrorMsg(repeatErr)}</HelperText>
+      )}
       <Button
         style={style.signUp}
         mode="contained"
@@ -117,8 +184,108 @@ function SignUp({route, navigation}: SignUpProps): JSX.Element {
           Sign In
         </Button>
       </View>
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={() => {
+          setSnackbarVisible(false);
+        }}
+        icon="close"
+        onIconPress={() => {
+          setSnackbarVisible(false);
+        }}>
+        Oops, an error occured
+      </Snackbar>
     </View>
   );
 }
+
+function countPasswordErrors(text: string): number[] {
+  let providedConstraintCount = 0;
+  let errorType = errorCodes.noError;
+
+  text.length > 0
+    ? (providedConstraintCount += 1)
+    : (errorType = errorCodes.emptyPassword);
+
+  text.length > 6
+    ? (providedConstraintCount += 1)
+    : (errorType = errorCodes.insufficientLength);
+
+  text !== text.toLowerCase()
+    ? (providedConstraintCount += 1)
+    : (errorType = errorCodes.noUpperCase);
+
+  /\d/.test(text)
+    ? (providedConstraintCount += 1)
+    : (errorType = errorCodes.noNumber);
+
+  return [providedConstraintCount, errorType];
+}
+
+function getErrorMsg(errorCode: number): string {
+  switch (errorCode) {
+    case errorCodes.noError:
+      return '';
+    case errorCodes.emptyPassword:
+      return "Password field can't be left empty";
+    case errorCodes.insufficientLength:
+      return 'Passwords can not be shorter than 6 characters';
+    case errorCodes.noUpperCase:
+      return 'Passwords should containt atleast 1 uppercase letter';
+    case errorCodes.noNumber:
+      return 'Passwords should contain atleast 1 number';
+    case errorCodes.missingRepeatMatch:
+      return 'Password repeat must match the password';
+    case errorCodes.emptyEmail:
+      return "Email field can't be left empty";
+    case errorCodes.emptyRepeat:
+      return "Password repeat field can't be left empt";
+    case errorCodes.invalidEmail:
+      return 'Please enter a valid email address';
+    default:
+      return '';
+  }
+}
+
+const style = StyleSheet.create({
+  view: {
+    minHeight: '100%',
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginHorizontal: '5%',
+  },
+  text: {
+    textAlign: 'center',
+    marginVertical: '1%',
+  },
+  signUp: {
+    width: '100%',
+    borderRadius: 5,
+    marginVertical: '2%',
+  },
+  signIn: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexDirection: 'row',
+    marginTop: '1%',
+  },
+  textVertical: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: '2%',
+    marginTop: '2%',
+  },
+  passwordElem: {
+    flex: 1,
+    backgroundColor: '#50cd89',
+    borderRadius: 50,
+    height: 5,
+    marginEnd: '3%',
+  },
+});
 
 export default SignUp;

@@ -2,12 +2,20 @@ import React from 'react';
 import {ScrollView} from 'react-native';
 import {Button} from 'react-native-paper';
 import {SignOut} from '../services/auth/Auth';
-import CircularBarCard from '../components/CircularBarCard';
+import TrackingCard from '../components/tracking/TrackingCard';
 
 function Tracking(): JSX.Element {
+  const [weight, setWeight] = React.useState(60);
+
+  function handleNutrition(): void {}
+
+  function handleWeight(): void {
+    setWeight(weight + 5);
+  }
+
   return (
     <ScrollView style={{paddingTop: 10}}>
-      <CircularBarCard
+      <TrackingCard
         title="Nutrition"
         circularBarProps={{
           radius: 50,
@@ -28,7 +36,7 @@ function Tracking(): JSX.Element {
         onPress={handleNutrition}
       />
 
-      <CircularBarCard
+      <TrackingCard
         title="Weight"
         circularBarProps={{
           radius: 50,
@@ -36,10 +44,10 @@ function Tracking(): JSX.Element {
           color: 'purple',
           strokeOpacity: 0.3,
           minValue: 0,
-          maxValue: 90,
-          currentValue: 70,
-          animationDuration: 1000,
-          delay: 0,
+          maxValue: weight > 120 ? 200 : 120,
+          currentValue: weight,
+          animationDuration: 500,
+          delay: 100,
           hasIcon: true,
           iconName: 'weight-kilogram',
           iconSize: 40,
@@ -60,9 +68,5 @@ function Tracking(): JSX.Element {
     </ScrollView>
   );
 }
-
-function handleNutrition(): void {}
-
-function handleWeight(): void {}
 
 export default Tracking;

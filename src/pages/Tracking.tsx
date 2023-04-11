@@ -3,6 +3,7 @@ import {ScrollView} from 'react-native';
 import {Button} from 'react-native-paper';
 import {SignOut} from '../services/auth/Auth';
 import TrackingCard from '../components/tracking/TrackingCard';
+import i18n from '../localization/_i18n';
 
 function Tracking(): JSX.Element {
   const [weight, setWeight] = React.useState(60);
@@ -32,7 +33,7 @@ function Tracking(): JSX.Element {
           iconSize: 40,
           style: {margin: '5%'},
         }}
-        text="Eat upto 2600 calories!"
+        text={i18n.t('calorie-card-info-text', {amount: 2600})}
         onPress={handleNutrition}
       />
 
@@ -53,7 +54,7 @@ function Tracking(): JSX.Element {
           iconSize: 40,
           style: {margin: '5%'},
         }}
-        text="Track your weight!"
+        text={i18n.t('track-weight')}
         onPress={handleWeight}
       />
 
@@ -63,7 +64,7 @@ function Tracking(): JSX.Element {
         onPress={() => {
           SignOut();
         }}>
-        Sign Out
+        {i18n.t('sign-out')}
       </Button>
     </ScrollView>
   );

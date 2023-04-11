@@ -16,6 +16,7 @@ import SignUp from './src/pages/SignUp';
 import {type FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {subscribe} from './src/services/auth/Auth';
 import Main from './src/pages/Main';
+import i18n from './src/localization/_i18n';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -61,7 +62,10 @@ function App(): JSX.Element {
                 <Stack.Screen
                   name="SignUp"
                   component={SignUp}
-                  options={{title: 'Sign Up', headerTitleAlign: 'center'}}
+                  options={{
+                    title: i18n.t('sign-up'),
+                    headerTitleAlign: 'center',
+                  }}
                 />
                 <Stack.Screen
                   name="SignIn"

@@ -5,6 +5,7 @@ import {View, StyleSheet} from 'react-native';
 import {useAppTheme} from '../style/Theme';
 import {SignInWithEmail, getUser, googleSignIn} from '../services/auth/Auth';
 import {type FirebaseAuthError} from '../types/firebase/Firebase';
+import i18n from '../localization/_i18n';
 
 function SignIn({route, navigation}: SignInProps): JSX.Element {
   const [email, setEmail] = React.useState('');
@@ -51,12 +52,12 @@ function SignIn({route, navigation}: SignInProps): JSX.Element {
     <View style={style.view}>
       <View>
         <Text style={style.text} variant="displayMedium">
-          Sign In
+          {i18n.t('sign-in')}
         </Text>
         <Text
           style={{color: theme.colors.muted, ...style.text}}
           variant="labelMedium">
-          Your Health Application
+          {i18n.t('app-slogan')}
         </Text>
         <Button
           icon={require('../../assets/images/google-logo.png')}
@@ -65,17 +66,17 @@ function SignIn({route, navigation}: SignInProps): JSX.Element {
           onPress={() => {
             signInWithGoogle();
           }}>
-          Sign In With Google
+          {i18n.t('sign-in-google')}
         </Button>
         <Text
           style={{color: theme.colors.muted, ...style.text}}
           variant="labelSmall">
-          Or with Email
+          {i18n.t('sign-in-or-email')}
         </Text>
         <TextInput
           style={style.input}
           mode="outlined"
-          placeholder="Your Email"
+          placeholder={i18n.t('email')}
           onChangeText={text => {
             setEmail(text);
           }}
@@ -84,30 +85,30 @@ function SignIn({route, navigation}: SignInProps): JSX.Element {
           style={style.input}
           mode="outlined"
           secureTextEntry={true}
-          placeholder="Your Password"
+          placeholder={i18n.t('password')}
           onChangeText={text => {
             setPassword(text);
           }}
         />
-        <Button mode="text">Forgot Password?</Button>
+        <Button mode="text">{i18n.t('password-forget')}</Button>
         <Button
           style={style.signIn}
           mode="contained"
           onPress={() => {
             onSubmit();
           }}>
-          Sign In
+          {i18n.t('sign-in')}
         </Button>
         <View style={style.signUp}>
           <Text style={{color: theme.colors.muted, ...style.textVertical}}>
-            Not a Member Yet
+            {i18n.t('member-msg')}
           </Text>
           <Button
             mode="text"
             onPress={() => {
               navigation.navigate('SignUp');
             }}>
-            Sign Up
+            {i18n.t('sign-up')}
           </Button>
         </View>
       </View>

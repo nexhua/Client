@@ -11,6 +11,7 @@ import {StyleSheet, View} from 'react-native';
 import {useAppTheme} from '../style/Theme';
 import {SignUpWithEmail, getUser} from '../services/auth/Auth';
 import {type FirebaseAuthError} from '../types/firebase/Firebase';
+import i18n from '../localization/_i18n';
 
 const errorCodes = {
   noError: -1,
@@ -68,7 +69,7 @@ function SignUp({route, navigation}: SignUpProps): JSX.Element {
   }
 
   function checkPasswordConstraints(text: string): number {
-    const [errorCount, errorCode] = countPasswordErrors(text);
+    const [, errorCode] = countPasswordErrors(text);
 
     return errorCode;
   }
@@ -100,16 +101,16 @@ function SignUp({route, navigation}: SignUpProps): JSX.Element {
   return (
     <View style={style.view}>
       <Text style={style.text} variant="displayMedium">
-        Sign Up
+        {i18n.t('sign-up')}
       </Text>
       <Text
         style={{color: theme.colors.muted, ...style.text}}
         variant="labelMedium">
-        Your Health Application
+        {i18n.t('app-slogan')}
       </Text>
       <TextInput
         mode="outlined"
-        placeholder="Email"
+        placeholder={i18n.t('email')}
         onChangeText={text => {
           setSubmitted(false);
           setEmail(text);
@@ -121,7 +122,7 @@ function SignUp({route, navigation}: SignUpProps): JSX.Element {
       <TextInput
         secureTextEntry={true}
         mode="outlined"
-        placeholder="Password"
+        placeholder={i18n.t('password')}
         onChangeText={text => {
           const [errorCount] = countPasswordErrors(text);
           setSubmitted(false);
@@ -149,13 +150,12 @@ function SignUp({route, navigation}: SignUpProps): JSX.Element {
         })}
       </View>
       <Text variant="labelMedium" style={{color: theme.colors.muted}}>
-        Password should have at least 6 characters, a letter, a number and
-        uppercase letter
+        {i18n.t('password-warning')}
       </Text>
       <TextInput
         secureTextEntry={true}
         mode="outlined"
-        placeholder="Repeat Password"
+        placeholder={i18n.t('password-repeat')}
         onChangeText={text => {
           setSubmitted(false);
           setPasswordRepeat(text);
@@ -170,18 +170,18 @@ function SignUp({route, navigation}: SignUpProps): JSX.Element {
         onPress={() => {
           onSubmit();
         }}>
-        Sign Up
+        {i18n.t('sign-up')}
       </Button>
       <View style={style.signIn}>
         <Text style={{color: theme.colors.muted, ...style.textVertical}}>
-          Already have an Account?
+          {i18n.t('already-have-acc')}
         </Text>
         <Button
           mode="text"
           onPress={() => {
             navigation.navigate('SignIn');
           }}>
-          Sign In
+          {i18n.t('sign-in')}
         </Button>
       </View>
       <Snackbar
@@ -227,21 +227,21 @@ function getErrorMsg(errorCode: number): string {
     case errorCodes.noError:
       return '';
     case errorCodes.emptyPassword:
-      return "Password field can't be left empty";
+      return i18n.t('password-empty-warning');
     case errorCodes.insufficientLength:
-      return 'Passwords can not be shorter than 6 characters';
+      return i18n.t('password-length-warning');
     case errorCodes.noUpperCase:
-      return 'Passwords should containt atleast 1 uppercase letter';
+      return i18n.t('password-upper-case-warning');
     case errorCodes.noNumber:
-      return 'Passwords should contain atleast 1 number';
+      return i18n.t('password-number-warning');
     case errorCodes.missingRepeatMatch:
-      return 'Password repeat must match the password';
+      return i18n.t('password-repeat-matching-warning');
     case errorCodes.emptyEmail:
-      return "Email field can't be left empty";
+      return i18n.t('email-empty-warning');
     case errorCodes.emptyRepeat:
-      return "Password repeat field can't be left empt";
+      return i18n.t('password-repeat-empty-warning');
     case errorCodes.invalidEmail:
-      return 'Please enter a valid email address';
+      return i18n.t('email-invalid-warning');
     default:
       return '';
   }

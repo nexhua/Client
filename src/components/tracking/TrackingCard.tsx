@@ -3,20 +3,26 @@ import {Surface, Text} from 'react-native-paper';
 import {useAppTheme} from '../../style/Theme';
 import {StyleSheet, View} from 'react-native';
 import CircularBar, {type CircularBarProps} from './CircularBar';
-import TrackingButton from './TrackingButton';
+import TrackingButton, {type TrackingButtonProps} from './TrackingButton';
 
-interface CircularBarCardProps {
+interface TrackingCardProps {
   title: string;
-  circularBarProps: CircularBarProps;
   text: string;
-  onPress: () => void;
+  layout: 'vertical' | 'horizontal';
+  circularBarProps: CircularBarProps;
+  trackingButtonProps?: TrackingButtonProps;
+  hasSpinner: boolean;
+  spinner?: JSX.Element;
 }
 
-function TrackingCard(props: CircularBarCardProps): JSX.Element {
+function TrackingCard(props: TrackingCardProps): JSX.Element {
   const theme = useAppTheme();
 
   return (
-    <View>
+    <View
+      style={{
+        width: props.layout === 'horizontal' ? '100%' : '45%',
+      }}>
       <Text style={style.title} variant="headlineMedium">
         {props.title}
       </Text>
@@ -25,15 +31,24 @@ function TrackingCard(props: CircularBarCardProps): JSX.Element {
         style={{
           ...style.container,
           backgroundColor: theme.colors.surfaceVariant,
+          flexDirection: props.layout === 'horizontal' ? 'row' : 'column',
         }}>
         <CircularBar {...props.circularBarProps} />
-        <View style={{flex: 1}}>
-          <Text variant="bodyLarge">{props.text}</Text>
-        </View>
-        <TrackingButton
-          color={props.circularBarProps.color}
-          onPress={props.onPress}
-        />
+        {props.layout === 'horizontal' && (
+          <View style={{flex: 1}}>
+            <Text variant="bodyLarge">{props.text}</Text>
+          </View>
+        )}
+        {props.layout === 'vertical' && props.hasSpinner && (
+          <View style={{marginBottom: '5%'}}>{props.spinner}</View>
+        )}
+        {props.trackingButtonProps !== undefined && (
+          <TrackingButton
+            color={props.circularBarProps.color}
+            onPress={props.trackingButtonProps.onPress}
+            initialValue={props.trackingButtonProps.initialValue}
+          />
+        )}
       </Surface>
     </View>
   );
@@ -45,7 +60,6 @@ const style = StyleSheet.create({
     marginRight: '5%',
     marginBottom: '5%',
     borderRadius: 20,
-    flexDirection: 'row',
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'space-between',

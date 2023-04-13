@@ -10,7 +10,6 @@ const locales = RNLocalize.getLocales();
 
 i18n.locale = locales[0].languageTag;
 
-console.log(locales);
 i18n.enableFallback = true;
 i18n.defaultLocale = 'tr';
 i18n.translations = {

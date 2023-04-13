@@ -21,8 +21,16 @@
   "email-invalid-warning": "Lütfen geçerli bir email adresi giriniz",
   "password-repeat-empty-warning": "Şifre tekrarı alanı boş bırakılamaz",
   "calorie-card-info-text": "%{amount} kalori tüketebilirsiniz!",
+  "calorie-card-burn-calorie": "Bugünki hedefiniz %{target} kalori yakmak!",
   "track-weight": "Kilonuzu takip edin",
   "tracking": "Takip",
   "dietitian": "Diyetisyen",
-  "mealkit": "Yemek Kiti"
+  "mealkit": "Yemek Kiti",
+  "nutrition": "Besin",
+  "weight": "Kilo",
+  "water": "Su",
+  "exercise": "Egzersiz",
+  "search-food": "Yemek Arayın",
+  "pick-mu": "Bir Ölçü Birimi Seçin",
+  "macro-nutrient": "Makro Besinler"
 }

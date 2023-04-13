@@ -21,8 +21,16 @@
   "email-invalid-warning": "Please enter a valid email address",
   "password-repeat-empty-warning": "Password repeat field can't be left empty",
   "calorie-card-info-text": "Eat upto %{amount} calories!",
+  "calorie-card-burn-calorie": "Todays target is %{target} calories to burn!",
   "track-weight": "Track your weight",
   "tracking": "Tracking",
   "dietitian": "Dietitian",
-  "mealkit": "Meal Kit"
+  "mealkit": "Meal Kit",
+  "nutrition": "Nutrition",
+  "weight": "Weight",
+  "water": "Water",
+  "exercise": "Exercise",
+  "search-food": "Search Food",
+  "pick-mu": "Pick A Measurement Unit",
+  "macro-nutrient": "Macro NUtrients"
 }

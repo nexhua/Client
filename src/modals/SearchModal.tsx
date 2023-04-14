@@ -3,7 +3,7 @@ import {Appbar, Button, Modal, Searchbar} from 'react-native-paper';
 import {useAppTheme} from '../style/Theme';
 import i18n from '../localization/_i18n';
 import {View} from 'react-native';
-import someFood, {type FoodInfo} from '../mocks/Food';
+import {Beef as foundFood, type FoodInfo} from '../mocks/Food';
 
 export interface SearchModalProps {
   visible: boolean;
@@ -15,7 +15,7 @@ function SearchModal(props: SearchModalProps): JSX.Element {
   const [query, setQuery] = React.useState('');
   const theme = useAppTheme();
 
-  const [food] = React.useState<FoodInfo>(someFood);
+  const [food] = React.useState<FoodInfo>(foundFood);
 
   return (
     <Modal

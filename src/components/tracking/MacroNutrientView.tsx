@@ -84,7 +84,10 @@ function MacroNutrientView(props: MacroNutrientViewProps): JSX.Element {
           variant="bodyMedium"
           numberOfLines={1}
           style={{textAlign: 'center', fontWeight: 'bold'}}>
-          {String(prop.nutrient.amount).concat(prop.nutrient.nutrient.unitName)}
+          {String(prop.nutrient.amount).concat(
+            ' ',
+            prop.nutrient.nutrient.unitName,
+          )}
         </Text>
       </View>
     );

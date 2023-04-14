@@ -32,5 +32,9 @@
   "exercise": "Exercise",
   "search-food": "Search Food",
   "pick-mu": "Pick A Measurement Unit",
-  "macro-nutrient": "Macro NUtrients"
+  "macro-nutrient": "Macro NUtrients",
+  "track": "Track",
+  "nutrition-values": "Nutrition Values",
+  "amount": "Amount",
+  "unit": "Unit"
 }

@@ -32,5 +32,9 @@
   "exercise": "Egzersiz",
   "search-food": "Yemek Arayın",
   "pick-mu": "Bir Ölçü Birimi Seçin",
-  "macro-nutrient": "Makro Besinler"
+  "macro-nutrient": "Makro Besinler",
+  "track": "Ekle",
+  "nutrition-values": "Besin Değerleri",
+  "amount": "Miktar",
+  "unit": "Birim"
 }

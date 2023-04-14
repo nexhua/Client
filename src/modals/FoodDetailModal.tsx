@@ -3,10 +3,8 @@ import {Appbar, Button, Modal} from 'react-native-paper';
 import {useAppTheme} from '../style/Theme';
 import {type FoodPortion, type FoodInfo} from '../mocks/Food';
 import QuantitySelect from '../components/tracking/QuantitySelect';
-import {getType, toGram} from '../util/UnitType';
-import {Unit} from '../types/tracking/Units';
 import MacroNutrientView from '../components/tracking/MacroNutrientView';
-import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {Carbs, Fat, Fiber, Protein} from '../constants/NutrientViews';
 import i18n from '../localization/_i18n';
 import NutrientDataTable from '../components/tracking/NutrientDataTable';
@@ -24,8 +22,6 @@ function FoodDetailModal(props: FoodDetailProps): JSX.Element {
   );
 
   const theme = useAppTheme();
-  console.log(getType('μg') === Unit.μg);
-  console.log(toGram(500, 'μg'));
 
   return (
     <Modal
@@ -72,8 +68,6 @@ function FoodDetailModal(props: FoodDetailProps): JSX.Element {
     </Modal>
   );
 }
-
-console.log(Dimensions.get('window').height);
 
 const style = StyleSheet.create({
   button: {

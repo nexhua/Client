@@ -1,7 +1,7 @@
 import React from 'react';
 import {Appbar, Button, Modal} from 'react-native-paper';
 import {useAppTheme} from '../style/Theme';
-import {type FoodPortion, type FoodInfo} from '../mocks/Food';
+import {type FoodPortion, type FoodInfo} from '../interfaces/Food';
 import QuantitySelect from '../components/tracking/QuantitySelect';
 import MacroNutrientView from '../components/tracking/MacroNutrientView';
 import {ScrollView, StyleSheet, View} from 'react-native';

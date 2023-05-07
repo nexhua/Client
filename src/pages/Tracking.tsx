@@ -8,16 +8,18 @@ import InputSpinner from 'react-native-input-spinner';
 import {useAppTheme} from '../style/Theme';
 import {type TrackingProps} from '../navigation/NavigationTabTypes';
 import SearchModal from '../modals/SearchModal';
-import {type FoodInfo} from '../mocks/Food';
+import {type FoodInfo} from '../interfaces/Food';
 import FoodDetailModal from '../modals/FoodDetailModal';
+import ActivityModal from '../modals/ActivityModal';
 
 function Tracking({route, navigation}: TrackingProps): JSX.Element {
-  const [weight, setWeight] = React.useState(30);
-  const [calorie, setCalorie] = React.useState(500);
+  const [weight, setWeight] = React.useState(80);
+  const [calorie, setCalorie] = React.useState(0);
   const [water, setWater] = React.useState(0);
-  const [burnedCalorie, setBurnedCalorie] = React.useState(100);
+  const [burnedCalorie, setBurnedCalorie] = React.useState(0);
   const [visibleSearch, setVisibleSearch] = React.useState(false);
   const [visibleFoodDetail, setVisibleFoodDetail] = React.useState(false);
+  const [visibleActivity, setVisibleActivity] = React.useState(false);
   const [food, setFood] = React.useState<FoodInfo>();
 
   const showSearchModal = (): void => {
@@ -35,14 +37,26 @@ function Tracking({route, navigation}: TrackingProps): JSX.Element {
     setVisibleFoodDetail(false);
   };
 
+  const showActivityModal = (): void => {
+    setVisibleActivity(true);
+  };
+
+  const hideActivityModal = (): void => {
+    setVisibleActivity(false);
+  };
+
   function handleNutrition(newCalorie: number): void {
-    setCalorie(newCalorie);
+    setCalorie(calorie + newCalorie);
   }
 
   function onFoodFound(food: FoodInfo): void {
     hideSearchModal();
     setFood(food);
     showFoodDetailModal();
+  }
+
+  function onTrackActivity(calorie: number): void {
+    setBurnedCalorie(burnedCalorie + calorie);
   }
 
   const theme = useAppTheme();
@@ -104,6 +118,7 @@ function Tracking({route, navigation}: TrackingProps): JSX.Element {
             color: 'olivedrab',
             onPress: (calorie: number) => {
               setBurnedCalorie(calorie);
+              showActivityModal();
             },
             initialValue: burnedCalorie,
           }}
@@ -217,6 +232,10 @@ function Tracking({route, navigation}: TrackingProps): JSX.Element {
             food={food}
           />
         )}
+        <ActivityModal
+          visible={visibleActivity}
+          onDismiss={hideActivityModal}
+          onTrackActivity={onTrackActivity}></ActivityModal>
       </Portal>
     </ScrollView>
   );

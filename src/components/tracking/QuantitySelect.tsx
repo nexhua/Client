@@ -4,7 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import i18n from '../../localization/_i18n';
 import {Picker} from '@react-native-picker/picker';
-import {type FoodPortion, type FoodInfo} from '../../mocks/Food';
+import {type FoodPortion, type FoodInfo} from '../../interfaces/Food';
 
 interface QuantitySelectProps {
   amount: number;

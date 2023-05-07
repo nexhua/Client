@@ -36,5 +36,10 @@
   "track": "Track",
   "nutrition-values": "Nutrition Values",
   "amount": "Amount",
-  "unit": "Unit"
+  "unit": "Unit",
+  "search-activity": "Search activity",
+  "search-activity-warning": "Please search for an activity",
+  "burned-calorie": "Burned calorie(kcal)",
+  "directly-enter-kcal": "Or directly enter kcal",
+  "minutes": "Time(minute)"
 }

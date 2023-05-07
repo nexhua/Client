@@ -3,7 +3,8 @@ import {Appbar, Button, Modal, Searchbar} from 'react-native-paper';
 import {useAppTheme} from '../style/Theme';
 import i18n from '../localization/_i18n';
 import {View} from 'react-native';
-import {Beef as foundFood, type FoodInfo} from '../mocks/Food';
+import {type FoodInfo} from '../interfaces/Food';
+import {Beef as foundFood} from '../mocks/Food';
 
 export interface SearchModalProps {
   visible: boolean;

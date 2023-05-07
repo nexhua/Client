@@ -36,5 +36,10 @@
   "track": "Ekle",
   "nutrition-values": "Besin Değerleri",
   "amount": "Miktar",
-  "unit": "Birim"
+  "unit": "Birim",
+  "search-activity": "Aktivite arayınız",
+  "search-activity-warning": "Lütfen bir aktivite arayınız",
+  "burned-calorie": "Yakılan kalori(kcal)",
+  "directly-enter-kcal": "Ya da direkt harcanan kalori miktarını giriniz",
+  "minutes": "Süre(dakika)"
 }

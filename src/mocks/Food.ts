@@ -1,4 +1,4 @@
-import {type FoodInfo} from '../interfaces/Food';
+import {type FoodInfo} from '../interfaces/tracking/Food';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const humanMilkString = JSON.stringify({

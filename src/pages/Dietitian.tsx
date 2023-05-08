@@ -1,11 +1,26 @@
 import React from 'react';
-import {Text} from 'react-native-paper';
-import {View} from 'react-native';
+import {ScrollView, View} from 'react-native';
+import DietitianCard from '../components/dietitian/DietitianCard';
+import {dietitian} from '../mocks/Dietitian';
+import {Searchbar} from 'react-native-paper';
 
 function Dietitian(): JSX.Element {
+  const [search, setSearch] = React.useState('');
+
   return (
-    <View>
-      <Text>Dietitian</Text>
+    <View style={{height: '100%', marginHorizontal: '5%'}}>
+      <ScrollView>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={text => {
+            setSearch(text);
+          }}
+          value={search}
+          mode="view"
+          style={{marginTop: '5%'}}
+        />
+        <DietitianCard dietitian={dietitian} />
+      </ScrollView>
     </View>
   );
 }

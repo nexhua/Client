@@ -8,7 +8,7 @@ import InputSpinner from 'react-native-input-spinner';
 import {useAppTheme} from '../style/Theme';
 import {type TrackingProps} from '../navigation/NavigationTabTypes';
 import SearchModal from '../modals/SearchModal';
-import {type FoodInfo} from '../interfaces/Food';
+import {type FoodInfo} from '../interfaces/tracking/Food';
 import FoodDetailModal from '../modals/FoodDetailModal';
 import ActivityModal from '../modals/ActivityModal';
 
@@ -117,7 +117,6 @@ function Tracking({route, navigation}: TrackingProps): JSX.Element {
           trackingButtonProps={{
             color: 'olivedrab',
             onPress: (calorie: number) => {
-              setBurnedCalorie(calorie);
               showActivityModal();
             },
             initialValue: burnedCalorie,

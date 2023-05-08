@@ -5,7 +5,7 @@ import {StyleSheet, View} from 'react-native';
 import {
   type Activity,
   type PhysicalActivity,
-} from '../interfaces/PhysicalActivity';
+} from '../interfaces/tracking/PhysicalActivity';
 import {running} from '../mocks/Activity';
 import {Picker} from '@react-native-picker/picker';
 import i18n from '../localization/_i18n';

@@ -1,7 +1,7 @@
 import {
   type Activity,
   type PhysicalActivity,
-} from '../interfaces/PhysicalActivity';
+} from '../interfaces/tracking/PhysicalActivity';
 
 const Activities: Activity[] = [
   {

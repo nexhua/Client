@@ -1,5 +1,5 @@
 import React from 'react';
-import {type FoodNutrient, type FoodInfo} from '../../interfaces/Food';
+import {type FoodNutrient, type FoodInfo} from '../../interfaces/tracking/Food';
 import {View} from 'react-native';
 import {DataTable, Text} from 'react-native-paper';
 import i18n from '../../localization/_i18n';

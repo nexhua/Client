@@ -3,7 +3,7 @@ import {Appbar, Button, Modal, Searchbar} from 'react-native-paper';
 import {useAppTheme} from '../style/Theme';
 import i18n from '../localization/_i18n';
 import {View} from 'react-native';
-import {type FoodInfo} from '../interfaces/Food';
+import {type FoodInfo} from '../interfaces/tracking/Food';
 import {Beef as foundFood} from '../mocks/Food';
 
 export interface SearchModalProps {

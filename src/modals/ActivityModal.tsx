@@ -135,7 +135,7 @@ function ActivityModal(props: ActivityModalProps): JSX.Element {
           <View style={style.activityContainer}>
             <TextInput
               style={style.minuteContainer}
-              label={i18n.t('minutes')}
+              label={i18n.t('minutes-title')}
               value={minutes.toString()}
               onChangeText={minutes => {
                 sanitizeMinutes(minutes);
@@ -143,7 +143,12 @@ function ActivityModal(props: ActivityModalProps): JSX.Element {
             />
             <View style={style.pickerContainer}>{activityPicker}</View>
           </View>
-          <Text style={{color: theme.colors.muted, textAlign: 'center'}}>
+          <Text
+            style={{
+              color: theme.colors.muted,
+              textAlign: 'center',
+              marginVertical: '5%',
+            }}>
             {i18n.t('directly-enter-kcal')}
           </Text>
           <TextInput

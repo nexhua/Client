@@ -41,5 +41,12 @@
   "search-activity-warning": "Lütfen bir aktivite arayınız",
   "burned-calorie": "Yakılan kalori(kcal)",
   "directly-enter-kcal": "Ya da direkt harcanan kalori miktarını giriniz",
-  "minutes": "Süre(dakika)"
+  "minutes-title": "Süre(dakika)",
+  "allergens": "Alerjen Maddeler",
+  "total-time": "Toplam Süre",
+  "difficulty": "Zorluk",
+  "serving-amount": "Porsiyon Sayısı",
+  "portion": "Porsiyon",
+  "minutes": "Dakika",
+  "ingredients": "İçindekiler"
 }

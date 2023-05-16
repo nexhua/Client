@@ -32,7 +32,7 @@
   "exercise": "Exercise",
   "search-food": "Search Food",
   "pick-mu": "Pick A Measurement Unit",
-  "macro-nutrient": "Macro NUtrients",
+  "macro-nutrient": "Macro Nutrients",
   "track": "Track",
   "nutrition-values": "Nutrition Values",
   "amount": "Amount",
@@ -41,5 +41,12 @@
   "search-activity-warning": "Please search for an activity",
   "burned-calorie": "Burned calorie(kcal)",
   "directly-enter-kcal": "Or directly enter kcal",
-  "minutes": "Time(minute)"
+  "minutes-title": "Time(minute)",
+  "allergens": "Allergens",
+  "total-time": "Total Time",
+  "difficulty": "Difficulty",
+  "serving-amount": "Serving Amount",
+  "portion": "Portion",
+  "minutes": "Minutes",
+  "ingredients": "Ingredients"
 }

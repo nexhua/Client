@@ -23,7 +23,7 @@ function TrackingCard(props: TrackingCardProps): JSX.Element {
       style={{
         width: props.layout === 'horizontal' ? '100%' : '45%',
       }}>
-      <Text style={style.title} variant="headlineMedium">
+      <Text style={style.title} variant="headlineSmall">
         {props.title}
       </Text>
       <Surface

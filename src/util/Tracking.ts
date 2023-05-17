@@ -65,5 +65,6 @@ export function calculateActivityCalorie(
   duration: number,
   weight: number,
 ): number {
-  return ((met * duration) / 60.0) * weight;
+  const hour = duration / 60.0;
+  return met * hour * weight;
 }

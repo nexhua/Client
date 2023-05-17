@@ -250,6 +250,7 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
           />
         )}
         <ActivityModal
+          weight={weight}
           visible={visibleActivity}
           onDismiss={hideActivityModal}
           onTrackActivity={onTrackActivity}></ActivityModal>

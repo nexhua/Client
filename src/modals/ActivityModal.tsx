@@ -2,15 +2,17 @@ import React from 'react';
 import {Appbar, Button, Modal, Text, TextInput} from 'react-native-paper';
 import {useAppTheme} from '../style/Theme';
 import {StyleSheet, View} from 'react-native';
-import {
-  type Activity,
-  type PhysicalActivity,
-} from '../interfaces/tracking/PhysicalActivity';
-import {running} from '../mocks/Activity';
 import {Picker} from '@react-native-picker/picker';
 import i18n from '../localization/_i18n';
+import {type Activity} from '../interfaces/health/Activity';
+import {
+  activityCategories,
+  activities as mockActivities,
+} from '../mocks/Activity';
+import {calculateActivityCalorie} from '../util/Tracking';
 
 export interface ActivityModalProps {
+  weight: number;
   visible: boolean;
   onDismiss: () => void;
   onTrackActivity: (calorie: number) => void;
@@ -18,10 +20,10 @@ export interface ActivityModalProps {
 
 function ActivityModal(props: ActivityModalProps): JSX.Element {
   const [search, setSearch] = React.useState('');
-  const [activity, setActivity] = React.useState<
-    PhysicalActivity | undefined
-  >();
+
+  const [activities, setActivities] = React.useState<Activity[]>([]);
   const [selectedActivity, setSelectedActivity] = React.useState<Activity>();
+
   const [minutes, setMinutes] = React.useState(0);
   const [kcal, setKcal] = React.useState(0);
 
@@ -31,7 +33,13 @@ function ActivityModal(props: ActivityModalProps): JSX.Element {
     setSearch(text);
 
     // Assume found
-    setActivity(running);
+    // Get activities of the found category
+
+    setActivities(
+      mockActivities.filter(
+        act => act.categoryId.toString() === activityCategories[0].code,
+      ),
+    );
   }
 
   function sanitizeCalorie(calorie: string): void {
@@ -56,7 +64,13 @@ function ActivityModal(props: ActivityModalProps): JSX.Element {
       props.onDismiss();
     } else {
       if (minutes > 0 && selectedActivity !== undefined) {
-        props.onTrackActivity(selectedActivity.met * minutes);
+        props.onTrackActivity(
+          calculateActivityCalorie(
+            selectedActivity.metRatio,
+            minutes,
+            props.weight,
+          ),
+        );
         props.onDismiss();
       }
     }
@@ -64,11 +78,11 @@ function ActivityModal(props: ActivityModalProps): JSX.Element {
 
   let activityPicker;
 
-  if (activity !== undefined) {
+  if (activities.length > 0) {
     activityPicker = (
       <View>
         <Picker
-          selectedValue={activity.activities[0]}
+          selectedValue={activities[0]}
           onValueChange={(itemValue, itemIndex) => {
             setSelectedActivity(itemValue);
           }}
@@ -76,13 +90,9 @@ function ActivityModal(props: ActivityModalProps): JSX.Element {
           style={{
             backgroundColor: theme.colors.surfaceVariant,
           }}>
-          {activity.activities.map((activity, i) => {
+          {activities.map((activity, i) => {
             return (
-              <Picker.Item
-                key={i}
-                label={activity.description}
-                value={activity}
-              />
+              <Picker.Item key={i} label={activity.name} value={activity} />
             );
           })}
         </Picker>

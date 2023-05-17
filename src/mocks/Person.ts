@@ -17,7 +17,7 @@ export const person: Person = {
   menstrualCycleDays: null,
   pregnancyDueDate: null,
   mainGoal: 'lostWeight',
-  activityGoal: 600,
+  activityGoal: 1000,
   calorieGoal: 2500,
   stepsGoal: 8000,
   weightGoal: 70,

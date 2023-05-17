@@ -1,6 +1,6 @@
 import {type ActivityTracking} from '../interfaces/health/trackings/ActivityTracking';
 import {isToday} from './Time';
-import {activities} from '../mocks/trackings/Activity';
+import {activities} from '../mocks/Activity';
 
 interface TrackingDate {
   date: Date;

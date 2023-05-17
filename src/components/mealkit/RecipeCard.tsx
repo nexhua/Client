@@ -14,6 +14,12 @@ interface RecipeCardProps {
 }
 
 function RecipeCard(props: RecipeCardProps): JSX.Element {
+  const [image] = React.useState(
+    props.recipe.imageUrl !== null
+      ? {uri: props.recipe.imageUrl}
+      : require('../../../assets/images/fallback-image.jpg'),
+  );
+
   const theme = useAppTheme();
 
   return (
@@ -22,7 +28,11 @@ function RecipeCard(props: RecipeCardProps): JSX.Element {
         props.onPress();
       }}>
       <View style={{...style.container, borderColor: theme.colors.primary}}>
-        <Image source={{uri: props.recipe.imageUrl}} style={style.image} />
+        <Image
+          source={image}
+          defaultSource={require('../../../assets/images/fallback-image.jpg')}
+          style={style.image}
+        />
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text variant="titleSmall" style={style.title}>
             {props.recipe.name}
@@ -89,7 +99,9 @@ const style = StyleSheet.create({
   },
   image: {
     width: '100%',
+    height: undefined,
     aspectRatio: 1,
+    overflow: 'visible',
   },
   title: {
     marginTop: '2%',

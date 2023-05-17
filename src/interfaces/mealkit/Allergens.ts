@@ -12,6 +12,6 @@ export interface IngredientAllergens {
 export interface Allergens {
   id: number;
   code: string;
-  description: string;
+  description: string | null;
   name: string;
 }

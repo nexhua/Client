@@ -81,7 +81,6 @@ function Mealkit(): JSX.Element {
               recipe={recipe}
               amount={elem.amount}
               onPress={() => {
-                console.log('pressed: ', i);
                 setRecipeDetail(elem.product);
                 setRecipeModalVisible(true);
               }}

@@ -53,8 +53,12 @@ function RecipeDetailModal(props: RecipeDetailModalProps): JSX.Element {
             />
           </Appbar.Header>
           <Image
-            source={{uri: props.recipe.imageUrl}}
-            style={{width: '100%', aspectRatio: 1}}
+            source={
+              props.recipe.imageUrl !== null
+                ? {uri: props.recipe.imageUrl}
+                : require('../../assets/images/fallback-image.jpg')
+            }
+            style={{width: '100%', aspectRatio: 1, height: undefined}}
           />
           <View
             style={{

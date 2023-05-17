@@ -58,8 +58,6 @@ function Main({route, navigation}: MainProps): JSX.Element {
     }, ${foundAddress !== undefined ? foundAddress.street : ''}`;
   }
 
-  console.log(value);
-
   return (
     <MealkitCartContext.Provider value={mealkitContext}>
       <Tab.Navigator>

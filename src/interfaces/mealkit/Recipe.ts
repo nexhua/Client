@@ -4,13 +4,13 @@
 export interface Recipe {
   id: number;
   authorId: number;
-  foodId: number;
+  foodId: number | null;
   mainCategoryId: number;
   mainCuisineId: number;
   createdAt: Date;
-  description: string;
+  description: string | null;
   difficulty: number;
-  imageUrl: string;
+  imageUrl: string | null;
   isAvailable: boolean;
   isDeliverable: boolean;
   isVisible: boolean;

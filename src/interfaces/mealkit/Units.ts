@@ -4,5 +4,5 @@
 export interface Units {
   id: number;
   name: string;
-  symbol: string;
+  symbol: string | null;
 }

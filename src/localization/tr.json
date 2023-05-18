@@ -48,5 +48,12 @@
   "serving-amount": "Porsiyon Sayısı",
   "portion": "Porsiyon",
   "minutes": "Dakika",
-  "ingredients": "İçindekiler"
+  "ingredients": "İçindekiler",
+  "breakfast": "Kahvaltı",
+  "morning-snack": "Sabah Atıştırmalığı",
+  "lunch": "Öğlen Yemeği",
+  "afternoon-snack": "Öğlen Atıştırmalığı",
+  "evening-snack": "Akşam Atıştırmalığı",
+  "dinner": "Akşam Yemeği",
+  "pick-meal-type": "Lütfen Bir Öğün Seçiniz"
 }

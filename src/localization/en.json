@@ -48,5 +48,12 @@
   "serving-amount": "Serving Amount",
   "portion": "Portion",
   "minutes": "Minutes",
-  "ingredients": "Ingredients"
+  "ingredients": "Ingredients",
+  "breakfast": "Breakfast",
+  "morning-snack": "Morning Snack",
+  "lunch": "Lunch",
+  "afternoon-snack": "Afternoon Snack",
+  "evening-snack": "Evening Snack",
+  "dinner": "Dinner",
+  "pick-meal-type": "Please Select A Meal"
 }

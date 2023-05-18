@@ -70,8 +70,6 @@ function Tracking({route, navigation}: TrackingProps): JSX.Element {
   }, []);
 
   function onFoodTrack(foodTracking: FoodTracking): void {
-    console.log(foodTracking);
-
     const newFoodTrackings = [...foodTrackings];
     newFoodTrackings.push(foodTracking);
 

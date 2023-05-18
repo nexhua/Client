@@ -1,5 +1,5 @@
 import React from 'react';
-import {Appbar, Button, Modal} from 'react-native-paper';
+import {Appbar, Button, Modal, Text} from 'react-native-paper';
 import {useAppTheme} from '../style/Theme';
 import QuantitySelect from '../components/tracking/QuantitySelect';
 import MacroNutrientView from '../components/tracking/MacroNutrientView';
@@ -8,9 +8,13 @@ import {Carbs, Fat, Fiber, Protein} from '../constants/NutrientViews';
 import i18n from '../localization/_i18n';
 import {type FoodUnit} from '../interfaces/nutrition/FoodUnit';
 import {type FoundFood} from '../interfaces/tracking/FoundFood';
-import {type FoodTracking} from '../interfaces/health/trackings/FoodTracking';
+import {
+  type MealTypes,
+  type FoodTracking,
+} from '../interfaces/health/trackings/FoodTracking';
 import NutrientDataTable from '../components/common/NutrientDataTable';
 import {getUser} from '../services/auth/Auth';
+import {Picker} from '@react-native-picker/picker';
 
 export interface FoodDetailProps {
   visible: boolean;
@@ -26,8 +30,8 @@ function FoodDetailModal(props: FoodDetailProps): JSX.Element {
   const [measurementUnit, setMeasurementUnit] = React.useState<FoodUnit>(
     props.foundFood.foodUnits[0],
   );
-
   const [rate, setRate] = React.useState(1.0);
+  const [mealType, setMealType] = React.useState<MealTypes>('breakfast');
 
   const theme = useAppTheme();
 
@@ -81,7 +85,7 @@ function FoodDetailModal(props: FoodDetailProps): JSX.Element {
       date: new Date(),
       createdAt: new Date(),
       foodName: props.foundFood.food.name,
-      meal: 'breakfast',
+      meal: mealType,
       unitId: measurementUnit.unitId.toString(),
       value: amount,
     };
@@ -119,6 +123,42 @@ function FoodDetailModal(props: FoodDetailProps): JSX.Element {
               setMeasurementUnit={handleUnitChange}
               food={props.foundFood}
             />
+
+            <Text variant="headlineSmall" style={{paddingVertical: '4%'}}>
+              {i18n.t('pick-meal-type')}
+            </Text>
+            <View
+              style={{
+                borderTopWidth: 3,
+                borderBottomWidth: 3,
+                borderColor: theme.colors.primary,
+              }}>
+              <Picker
+                selectedValue={mealType}
+                onValueChange={(value, index) => {
+                  setMealType(value);
+                }}
+                mode="dropdown"
+                style={{
+                  backgroundColor: theme.colors.surfaceVariant,
+                }}>
+                <Picker.Item label={i18n.t('breakfast')} value={'breakfast'} />
+                <Picker.Item
+                  label={i18n.t('morning-snack')}
+                  value={'morningSnack'}
+                />
+                <Picker.Item label={i18n.t('lunch')} value={'lunch'} />
+                <Picker.Item
+                  label={i18n.t('afternoon-snack')}
+                  value={'afternoonSnack'}
+                />
+                <Picker.Item
+                  label={i18n.t('evening-snack')}
+                  value={'eveningSnack'}
+                />
+                <Picker.Item label={i18n.t('dinner')} value={'dinner'} />
+              </Picker>
+            </View>
 
             <MacroNutrientView
               food={props.foundFood}

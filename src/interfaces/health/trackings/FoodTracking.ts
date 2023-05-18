@@ -10,13 +10,7 @@ export interface FoodTracking {
   createdAt: Date;
   date: Date;
   foodName: string;
-  meal:
-    | 'breakfast'
-    | 'morningSnack'
-    | 'lunch'
-    | 'afternoonSnack'
-    | 'eveningSnack'
-    | 'dinner';
+  meal: MealTypes;
   unitId: string; // Kullanicinin girdiği miktarin birimi. Flags: private.
   value: number; // Kullanicinin girdiği miktar.
 }
@@ -31,3 +25,11 @@ export interface FoodTrackingNutrient {
   trackingId: number;
   amount: number;
 }
+
+export type MealTypes =
+  | 'breakfast'
+  | 'morningSnack'
+  | 'lunch'
+  | 'afternoonSnack'
+  | 'eveningSnack'
+  | 'dinner';

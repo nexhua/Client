@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import i18n from '../../localization/_i18n';
 import {type Nutrient} from '../../interfaces/nutrition/Nutrient';
-import {units} from '../../mocks/Recipe';
+import {type Units} from '../../interfaces/mealkit/Units';
 
 export interface NutrientReference {
   nutrientId: number;
@@ -13,6 +13,8 @@ export interface NutrientReference {
 export interface NutrientDataTableProps<T extends NutrientReference> {
   foodNutrients: T[];
   nutrients: Nutrient[];
+  units: Units[];
+  rate: number;
 }
 
 function NutrientDataTable<T extends NutrientReference>(
@@ -31,12 +33,16 @@ function NutrientDataTable<T extends NutrientReference>(
       nutrient => nutrient.id === foodNutrient.nutrientId,
     );
 
-    const unit = units.find(elem => elem.id === nutrient?.unitId);
+    const unit = props.units.find(elem => elem.id === nutrient?.unitId);
 
     return (
       <DataTable.Row key={key}>
         <DataTable.Cell>{nutrient?.name}</DataTable.Cell>
-        <DataTable.Cell>{foodNutrient.amount}</DataTable.Cell>
+        <DataTable.Cell>
+          {props.rate !== 1.0
+            ? (foodNutrient.amount * props.rate).toFixed(1)
+            : foodNutrient.amount}
+        </DataTable.Cell>
         <DataTable.Cell>{unit?.name}</DataTable.Cell>
       </DataTable.Row>
     );
@@ -67,12 +73,12 @@ function NutrientDataTable<T extends NutrientReference>(
         <DataTable.Pagination
           page={page}
           numberOfPages={Math.ceil(
-            props.nutrients.length / numberOfItemsPerPage,
+            props.foodNutrients.length / numberOfItemsPerPage,
           )}
           onPageChange={page => {
             setPage(page);
           }}
-          label={`${from + 1}-${to} of ${props.nutrients.length}`}
+          label={`${from + 1}-${to} of ${props.foodNutrients.length}`}
           showFastPaginationControls
           numberOfItemsPerPage={numberOfItemsPerPage}
           selectPageDropdownLabel={'Rows per page'}

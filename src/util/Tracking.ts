@@ -1,6 +1,12 @@
 import {type ActivityTracking} from '../interfaces/health/trackings/ActivityTracking';
 import {isToday} from './Time';
 import {activities} from '../mocks/Activity';
+import {
+  type FoodTracking,
+  type FoodTrackingNutrient,
+} from '../interfaces/health/trackings/FoodTracking';
+import {type Nutrient} from '../interfaces/nutrition/Nutrient';
+import {type Units} from '../interfaces/mealkit/Units';
 
 interface TrackingDate {
   date: Date;
@@ -28,6 +34,33 @@ export function today<T extends TrackingDate>(trackings: T[]): T | null {
   } else {
     return null;
   }
+}
+
+export function todayAll<T extends TrackingDate>(trackings: T[]): T[] {
+  return trackings.filter(tracking => isToday(tracking.date));
+}
+
+export function getFoodTrackingCalorie(
+  tracking: FoodTracking,
+  foodTrackingNutrients: FoodTrackingNutrient[],
+  nutrients: Nutrient[],
+  units: Units[],
+): number {
+  const trackingNutrients = foodTrackingNutrients.filter(
+    trackingNutrients => trackingNutrients.trackingId === tracking.id,
+  );
+
+  const nutrient = nutrients.find(n => n.name === 'Energy');
+
+  if (nutrient !== undefined) {
+    const energyTrackings = trackingNutrients.filter(
+      t => t.nutrientId === nutrient.id,
+    );
+
+    return energyTrackings.reduce((prev, cur) => prev + cur.amount, 0);
+  }
+
+  return 0;
 }
 
 export function calorieHelper(
@@ -60,6 +93,7 @@ export function calorieHelper(
   return 0.0;
 }
 
+// MET Calculator
 export function calculateActivityCalorie(
   met: number,
   duration: number,

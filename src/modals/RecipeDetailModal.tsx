@@ -14,6 +14,7 @@ import {nutritions} from '../mocks/Nutrition';
 import i18n from '../localization/_i18n';
 import IngredientList from '../components/mealkit/IngredientList';
 import MealkitNutrition from '../components/mealkit/MealkitNutrition';
+import {units} from '../mocks/Unit';
 
 export interface RecipeDetailModalProps {
   recipe: Recipe;
@@ -86,6 +87,7 @@ function RecipeDetailModal(props: RecipeDetailModalProps): JSX.Element {
             <MealkitNutrition
               recipeNutrition={recipeNutrients}
               nutrients={nutritions}
+              units={units}
             />
           </View>
         </ScrollView>

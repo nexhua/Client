@@ -11,19 +11,22 @@ import SearchModal from '../../modals/SearchModal';
 import FoodDetailModal from '../../modals/FoodDetailModal';
 import ActivityModal from '../../modals/ActivityModal';
 import {type FoundFood} from '../../interfaces/tracking/FoundFood';
+import {type FoodTracking} from '../../interfaces/health/trackings/FoodTracking';
 
 export interface TrackingViewProps {
   person: Person;
   weight: number;
   water: number;
   burnedCalorie: number;
+  dailyCalorie: number;
+  onFoodTrack: (foodTracking: FoodTracking) => void;
 }
 
 function TrackingView(props: TrackingViewProps): JSX.Element {
   const [weight, setWeight] = React.useState(props.weight);
   const [water, setWater] = React.useState(props.water);
   const [burnedCalorie, setBurnedCalorie] = React.useState(props.burnedCalorie);
-  const [calorie, setCalorie] = React.useState(0);
+  const [calorie, setCalorie] = React.useState(props.dailyCalorie);
 
   const [visibleSearch, setVisibleSearch] = React.useState(false);
   const [visibleFoodDetail, setVisibleFoodDetail] = React.useState(false);
@@ -246,7 +249,10 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
           <FoodDetailModal
             visible={visibleFoodDetail}
             onDismiss={hideFoodDetailModal}
+            onTrack={props.onFoodTrack}
             foundFood={foundFood}
+            referenceAmount={foundFood.food.servingSize}
+            referenceUnitId={foundFood.food.servingSizeUnitId}
           />
         )}
         <ActivityModal

@@ -55,7 +55,7 @@ export const foodTrackingNutrients: FoodTrackingNutrient[] = [
     id: 3,
     nutrientId: 3,
     trackingId: 0,
-    amount: 10,
+    amount: 300,
   },
   {
     id: 4,

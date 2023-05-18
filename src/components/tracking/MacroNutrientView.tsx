@@ -9,11 +9,11 @@ import {type FoundFood} from '../../interfaces/tracking/FoundFood';
 import {type Nutrient} from '../../interfaces/nutrition/Nutrient';
 import {type FoodNutrient} from '../../interfaces/nutrition/FoodNutrient';
 import {type Units} from '../../interfaces/mealkit/Units';
-import {units} from '../../mocks/Recipe';
 
 interface MacroNutrientViewProps {
   food: FoundFood;
   views: NutrientView[];
+  rate: number;
 }
 
 interface MacroViewProps {
@@ -26,8 +26,6 @@ interface MacroViewProps {
 function MacroNutrientView(props: MacroNutrientViewProps): JSX.Element {
   const [viewProps, setViewProps] = React.useState<MacroViewProps[]>([]);
   const theme = useAppTheme();
-
-  console.log(props);
 
   React.useEffect(() => {
     const macros = props.food.foodNutrients
@@ -61,7 +59,9 @@ function MacroNutrientView(props: MacroNutrientViewProps): JSX.Element {
         );
 
         if (foodUnit !== undefined) {
-          const unit = units.find(unit => unit.id === foodUnit.unitId);
+          const unit = props.food.units.find(
+            unit => unit.id === foodUnit.unitId,
+          );
 
           if (unit !== undefined) {
             const viewProp: MacroViewProps = {
@@ -118,7 +118,9 @@ function MacroNutrientView(props: MacroNutrientViewProps): JSX.Element {
           variant="bodyMedium"
           numberOfLines={1}
           style={{textAlign: 'center', fontWeight: 'bold'}}>
-          {String(prop.foodNutrient.amount).concat(' ', prop.unit.name)}
+          {(prop.foodNutrient.amount * props.rate)
+            .toFixed(1)
+            .concat(' ', prop.unit.name)}
         </Text>
       </View>
     );

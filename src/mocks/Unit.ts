@@ -51,4 +51,14 @@ export const units: Units[] = [
     name: 'micro-gram',
     symbol: 'µg',
   },
+  {
+    id: 10,
+    name: 'kcal',
+    symbol: 'kcal',
+  },
+  {
+    id: 11,
+    name: 'miligram',
+    symbol: 'mg',
+  },
 ];

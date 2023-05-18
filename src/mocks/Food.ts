@@ -7,8 +7,8 @@ export const food: Food = {
   name: 'Beef steak, battered, fried, NS as to fat eaten',
   description: null,
   imageUrl: null,
-  servingSize: 2,
-  servingSizeUnitId: 0,
+  servingSize: 100,
+  servingSizeUnitId: 8,
 };
 
 export const foodUnits: FoodUnit[] = [
@@ -43,6 +43,22 @@ export const foodUnits: FoodUnit[] = [
   {
     foodId: 50,
     unitId: 7,
+  },
+  {
+    foodId: 50,
+    unitId: 8,
+  },
+  {
+    foodId: 50,
+    unitId: 9,
+  },
+  {
+    foodId: 50,
+    unitId: 10,
+  },
+  {
+    foodId: 50,
+    unitId: 11,
   },
 ];
 

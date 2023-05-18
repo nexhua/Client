@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {type ReactNode} from 'react';
 import {useAppTheme} from '../../style/Theme';
 import {StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
@@ -28,14 +28,18 @@ function QuantitySelect(props: QuantitySelectProps): JSX.Element {
     }
   }
 
-  const pickerItems = props.food.foodUnits.map((foodUnit, i) => {
+  const pickerItems: ReactNode[] = [];
+
+  props.food.foodUnits.map((foodUnit, i) => {
     const unit = props.food.units.find(unit => unit.id === foodUnit.unitId);
 
     if (unit !== undefined) {
-      return <Picker.Item key={i} label={unit.name} value={unit.id} />;
-    } else {
-      return <></>;
+      pickerItems.push(
+        <Picker.Item key={i} label={unit.name} value={foodUnit} />,
+      );
     }
+
+    return true;
   });
 
   return (

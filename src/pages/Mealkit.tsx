@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import RecipeCard from '../components/mealkit/RecipeCard';
-import {recipe} from '../mocks/Recipe';
+import {recipe, instructions} from '../mocks/Recipe';
 import Product from '../components/common/Product';
 import {type Recipe} from '../interfaces/mealkit/Recipe';
 import RecipeDetailModal from '../modals/RecipeDetailModal';
@@ -104,6 +104,7 @@ function Mealkit(): JSX.Element {
           visible={recipeModalVisible}
           onDismiss={hideRecipeDetailModal}
           recipe={recipeDetail}
+          instructions={instructions}
           isFavorite={Math.floor(Math.random() * 2) > 1}
         />
       )}

@@ -15,9 +15,12 @@ import i18n from '../localization/_i18n';
 import IngredientList from '../components/mealkit/IngredientList';
 import MealkitNutrition from '../components/mealkit/MealkitNutrition';
 import {units} from '../mocks/Unit';
+import {type Instructions} from '../interfaces/mealkit/Instructions';
+import Instruction from '../components/mealkit/Instruction';
 
 export interface RecipeDetailModalProps {
   recipe: Recipe;
+  instructions: Instructions[];
   visible: boolean;
   isFavorite: boolean;
   onDismiss: () => void;
@@ -89,6 +92,24 @@ function RecipeDetailModal(props: RecipeDetailModalProps): JSX.Element {
               nutrients={nutritions}
               units={units}
             />
+
+            <Text variant="headlineSmall" style={{marginTop: '2%'}}>
+              {i18n.t('instructions')}
+            </Text>
+            {props.instructions
+              .sort((a, b) => {
+                if (a.index < b.index) {
+                  return -1;
+                }
+                if (a.index > b.index) {
+                  return 1;
+                }
+
+                return 0;
+              })
+              .map((instruction, i) => {
+                return <Instruction key={i} instruction={instruction} />;
+              })}
           </View>
         </ScrollView>
       </View>

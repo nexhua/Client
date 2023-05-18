@@ -55,5 +55,6 @@
   "afternoon-snack": "Afternoon Snack",
   "evening-snack": "Evening Snack",
   "dinner": "Dinner",
-  "pick-meal-type": "Please Select A Meal"
+  "pick-meal-type": "Please Select A Meal",
+  "instructions": "Instructions"
 }

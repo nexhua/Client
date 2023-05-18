@@ -18,6 +18,7 @@ function MealkitNutrition(props: MealkitNutritionProps): JSX.Element {
         foodNutrients={props.recipeNutrition}
         nutrients={props.nutrients}
         units={props.units}
+        rate={1.0}
       />
     </View>
   );

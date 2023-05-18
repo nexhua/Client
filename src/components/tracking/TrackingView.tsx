@@ -8,9 +8,9 @@ import i18n from '../../localization/_i18n';
 import InputSpinner from 'react-native-input-spinner';
 import {useAppTheme} from '../../style/Theme';
 import SearchModal from '../../modals/SearchModal';
-import {type FoodInfo} from '../../interfaces/tracking/Food';
 import FoodDetailModal from '../../modals/FoodDetailModal';
 import ActivityModal from '../../modals/ActivityModal';
+import {type FoundFood} from '../../interfaces/tracking/FoundFood';
 
 export interface TrackingViewProps {
   person: Person;
@@ -29,7 +29,7 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
   const [visibleFoodDetail, setVisibleFoodDetail] = React.useState(false);
   const [visibleActivity, setVisibleActivity] = React.useState(false);
 
-  const [food, setFood] = React.useState<FoodInfo>();
+  const [foundFood, setFoundFood] = React.useState<FoundFood>();
 
   const showSearchModal = (): void => {
     setVisibleSearch(true);
@@ -58,9 +58,9 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
     setCalorie(calorie + newCalorie);
   }
 
-  function onFoodFound(food: FoodInfo): void {
+  function onFoodFound(foundFood: FoundFood): void {
     hideSearchModal();
-    setFood(food);
+    setFoundFood(foundFood);
     showFoodDetailModal();
   }
 
@@ -242,11 +242,11 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
           onDismiss={hideSearchModal}
           onSearchResult={onFoodFound}
         />
-        {food !== undefined && (
+        {foundFood !== undefined && (
           <FoodDetailModal
             visible={visibleFoodDetail}
             onDismiss={hideFoodDetailModal}
-            food={food}
+            foundFood={foundFood}
           />
         )}
         <ActivityModal

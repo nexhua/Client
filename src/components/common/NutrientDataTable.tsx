@@ -2,30 +2,42 @@ import React from 'react';
 import {View} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import i18n from '../../localization/_i18n';
-import {type FoodNutrient} from '../../interfaces/nutrition/Nutrient';
+import {type Nutrient} from '../../interfaces/nutrition/Nutrient';
 import {units} from '../../mocks/Recipe';
 
-export interface NutrientDataTableProps {
-  nutrients: FoodNutrient[];
+export interface NutrientReference {
+  nutrientId: number;
+  amount: number;
 }
 
-function NutrientDataTable(props: NutrientDataTableProps): JSX.Element {
+export interface NutrientDataTableProps<T extends NutrientReference> {
+  foodNutrients: T[];
+  nutrients: Nutrient[];
+}
+
+function NutrientDataTable<T extends NutrientReference>(
+  props: NutrientDataTableProps<T>,
+): JSX.Element {
   const [page, setPage] = React.useState(0);
   const [numberOfItemsPerPage] = React.useState(10);
   const from = page * numberOfItemsPerPage;
   const to = Math.min(
     (page + 1) * numberOfItemsPerPage,
-    props.nutrients.length,
+    props.foodNutrients.length,
   );
 
-  function createRow(foodNutrient: FoodNutrient, key: number): JSX.Element {
+  function createRow(foodNutrient: T, key: number): JSX.Element {
+    const nutrient = props.nutrients.find(
+      nutrient => nutrient.id === foodNutrient.nutrientId,
+    );
+
+    const unit = units.find(elem => elem.id === nutrient?.unitId);
+
     return (
       <DataTable.Row key={key}>
-        <DataTable.Cell>{foodNutrient.nutrient.name}</DataTable.Cell>
+        <DataTable.Cell>{nutrient?.name}</DataTable.Cell>
         <DataTable.Cell>{foodNutrient.amount}</DataTable.Cell>
-        <DataTable.Cell>
-          {units.find(elem => elem.id === foodNutrient.nutrient.unitId)?.name}
-        </DataTable.Cell>
+        <DataTable.Cell>{unit?.name}</DataTable.Cell>
       </DataTable.Row>
     );
   }
@@ -43,7 +55,7 @@ function NutrientDataTable(props: NutrientDataTableProps): JSX.Element {
           <DataTable.Title>{i18n.t('unit')}</DataTable.Title>
         </DataTable.Header>
 
-        {props.nutrients
+        {props.foodNutrients
           .slice(
             page * numberOfItemsPerPage,
             page * numberOfItemsPerPage + numberOfItemsPerPage,

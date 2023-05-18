@@ -3,20 +3,20 @@ import {Appbar, Button, Modal, Searchbar} from 'react-native-paper';
 import {useAppTheme} from '../style/Theme';
 import i18n from '../localization/_i18n';
 import {View} from 'react-native';
-import {type FoodInfo} from '../interfaces/tracking/Food';
-import {Beef as foundFood} from '../mocks/Food';
+import {type FoundFood} from '../interfaces/tracking/FoundFood';
+import {foundFood as mockFoundFood} from '../mocks/FoundFood';
 
 export interface SearchModalProps {
   visible: boolean;
   onDismiss: () => void;
-  onSearchResult: (food: FoodInfo) => void;
+  onSearchResult: (food: FoundFood) => void;
 }
 
 function SearchModal(props: SearchModalProps): JSX.Element {
   const [query, setQuery] = React.useState('');
   const theme = useAppTheme();
 
-  const [food] = React.useState<FoodInfo>(foundFood);
+  const [foundFood] = React.useState<FoundFood>(mockFoundFood);
 
   return (
     <Modal
@@ -48,7 +48,7 @@ function SearchModal(props: SearchModalProps): JSX.Element {
 
       <Button
         onPress={() => {
-          props.onSearchResult(food);
+          props.onSearchResult(foundFood);
         }}>
         assume found
       </Button>

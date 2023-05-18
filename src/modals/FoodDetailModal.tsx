@@ -1,24 +1,25 @@
 import React from 'react';
 import {Appbar, Button, Modal} from 'react-native-paper';
 import {useAppTheme} from '../style/Theme';
-import {type FoodPortion, type FoodInfo} from '../interfaces/tracking/Food';
 import QuantitySelect from '../components/tracking/QuantitySelect';
 import MacroNutrientView from '../components/tracking/MacroNutrientView';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Carbs, Fat, Fiber, Protein} from '../constants/NutrientViews';
 import i18n from '../localization/_i18n';
-import NutrientDataTable from '../components/tracking/NutrientDataTable';
+import {type FoodUnit} from '../interfaces/nutrition/FoodUnit';
+import {type FoundFood} from '../interfaces/tracking/FoundFood';
+import NutrientDataTable from '../components/common/NutrientDataTable';
 
 export interface FoodDetailProps {
   visible: boolean;
   onDismiss: () => void;
-  food: FoodInfo;
+  foundFood: FoundFood;
 }
 
 function FoodDetailModal(props: FoodDetailProps): JSX.Element {
   const [amount, setAmount] = React.useState(1);
-  const [measurementUnit, setMeasurementUnit] = React.useState<FoodPortion>(
-    props.food.foodPortions[0],
+  const [measurementUnit, setMeasurementUnit] = React.useState<FoodUnit>(
+    props.foundFood.foodUnits[0],
   );
 
   const theme = useAppTheme();
@@ -41,7 +42,7 @@ function FoodDetailModal(props: FoodDetailProps): JSX.Element {
                 props.onDismiss();
               }}
             />
-            <Appbar.Content title={props.food.description.split(',')[0]} />
+            <Appbar.Content title={props.foundFood.food.name.split(',')[0]} />
           </Appbar.Header>
 
           <View style={{marginHorizontal: '5%', paddingTop: '4%'}}>
@@ -50,15 +51,18 @@ function FoodDetailModal(props: FoodDetailProps): JSX.Element {
               measurementUnit={measurementUnit}
               setAmount={setAmount}
               setMeasurementUnit={setMeasurementUnit}
-              food={props.food}
+              food={props.foundFood}
             />
 
             <MacroNutrientView
-              food={props.food}
+              food={props.foundFood}
               views={[Protein, Carbs, Fat, Fiber]}
             />
 
-            <NutrientDataTable food={props.food} />
+            <NutrientDataTable
+              foodNutrients={props.foundFood.foodNutrients}
+              nutrients={props.foundFood.nutrients}
+            />
           </View>
         </ScrollView>
         <Button style={style.button} mode="contained">

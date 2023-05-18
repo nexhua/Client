@@ -113,4 +113,18 @@ export const nutritions: Nutrient[] = [
     parentId: 2131,
     unitId: 3,
   },
+  {
+    id: 16,
+    code: '16',
+    name: 'Fiber',
+    parentId: 2131,
+    unitId: 2,
+  },
+  {
+    id: 17,
+    code: '17',
+    name: 'Carbohydrates',
+    parentId: 2131,
+    unitId: 3,
+  },
 ];

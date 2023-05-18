@@ -4,14 +4,15 @@ import {StyleSheet, View} from 'react-native';
 import {Text, TextInput} from 'react-native-paper';
 import i18n from '../../localization/_i18n';
 import {Picker} from '@react-native-picker/picker';
-import {type FoodPortion, type FoodInfo} from '../../interfaces/tracking/Food';
+import {type FoundFood} from '../../interfaces/tracking/FoundFood';
+import {type FoodUnit} from '../../interfaces/nutrition/FoodUnit';
 
 interface QuantitySelectProps {
   amount: number;
-  measurementUnit: FoodPortion;
+  measurementUnit: FoodUnit;
   setAmount: (amount: number) => void;
-  setMeasurementUnit: (measureUnit: FoodPortion) => void;
-  food: FoodInfo;
+  setMeasurementUnit: (measureUnit: FoodUnit) => void;
+  food: FoundFood;
 }
 
 function QuantitySelect(props: QuantitySelectProps): JSX.Element {
@@ -26,6 +27,16 @@ function QuantitySelect(props: QuantitySelectProps): JSX.Element {
       props.setAmount(1);
     }
   }
+
+  const pickerItems = props.food.foodUnits.map((foodUnit, i) => {
+    const unit = props.food.units.find(unit => unit.id === foodUnit.unitId);
+
+    if (unit !== undefined) {
+      return <Picker.Item key={i} label={unit.name} value={unit.id} />;
+    } else {
+      return <></>;
+    }
+  });
 
   return (
     <View>
@@ -62,18 +73,7 @@ function QuantitySelect(props: QuantitySelectProps): JSX.Element {
             style={{
               backgroundColor: theme.colors.surfaceVariant,
             }}>
-            {props.food.foodPortions.map((portion, i) => {
-              return (
-                portion.gramWeight !== 0 &&
-                portion.portionDescription !== 'Quantity not specified' && (
-                  <Picker.Item
-                    key={i}
-                    label={portion.portionDescription}
-                    value={portion}
-                  />
-                )
-              );
-            })}
+            {pickerItems}
           </Picker>
         </View>
       </View>

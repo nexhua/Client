@@ -8,8 +8,3 @@ export interface Nutrient {
   parentId: number;
   unitId: number;
 }
-
-export interface FoodNutrient {
-  nutrient: Nutrient;
-  amount: number;
-}

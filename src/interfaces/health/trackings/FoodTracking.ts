@@ -5,7 +5,7 @@ export interface FoodTracking {
   id: number;
   foodId: number | null;
   personId: number;
-  computedUnitId: string; // Hesaplanmiş miktarin birimi (g yada ml). Flags: private.
+  computedUnitId: 'g' | 'ml'; // Hesaplanmiş miktarin birimi (g yada ml). Flags: private.
   computedValue: number; // Hesaplanmiş miktar.
   createdAt: Date;
   date: Date;

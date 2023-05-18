@@ -1,5 +1,5 @@
 import auth, {type FirebaseAuthTypes} from '@react-native-firebase/auth';
-import {type FirebaseAuthError} from '../../types/firebase/Firebase';
+import {type FirebaseAuthError} from '../../interfaces/firebase/Firebase';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const configure = (): void => {

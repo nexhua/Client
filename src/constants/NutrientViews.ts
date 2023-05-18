@@ -1,4 +1,4 @@
-import {type NutrientView} from '../types/tracking/NutrientView';
+import {type NutrientView} from '../interfaces/tracking/NutrientView';
 
 const Protein: NutrientView = {
   title: 'Protein',

@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import Icon from 'react-native-paper/src/components/Icon';
-import {type NutrientView} from '../../types/tracking/NutrientView';
+import {type NutrientView} from '../../interfaces/tracking/NutrientView';
 import {useAppTheme} from '../../style/Theme';
 import {Text} from 'react-native-paper';
 import i18n from '../../localization/_i18n';

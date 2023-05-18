@@ -10,7 +10,7 @@ import {type SignUpProps} from '../navigation/NavigationTypes';
 import {StyleSheet, View} from 'react-native';
 import {useAppTheme} from '../style/Theme';
 import {SignUpWithEmail, getUser} from '../services/auth/Auth';
-import {type FirebaseAuthError} from '../types/firebase/Firebase';
+import {type FirebaseAuthError} from '../interfaces/firebase/Firebase';
 import i18n from '../localization/_i18n';
 
 const errorCodes = {

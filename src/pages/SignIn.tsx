@@ -4,7 +4,7 @@ import {type SignInProps} from '../navigation/NavigationTypes';
 import {View, StyleSheet} from 'react-native';
 import {useAppTheme} from '../style/Theme';
 import {SignInWithEmail, getUser, googleSignIn} from '../services/auth/Auth';
-import {type FirebaseAuthError} from '../types/firebase/Firebase';
+import {type FirebaseAuthError} from '../interfaces/firebase/Firebase';
 import i18n from '../localization/_i18n';
 
 function SignIn({route, navigation}: SignInProps): JSX.Element {

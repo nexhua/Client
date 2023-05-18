@@ -4,10 +4,10 @@ import {nutritions} from './Nutrition';
 import {units} from './Unit';
 
 export const foundFood: FoundFood = {
-  food: food,
-  foodUnits: foodUnits,
-  foodNutrients: foodNutrients,
+  food,
+  foodUnits,
+  foodNutrients,
   nutrients: nutritions,
   unitConversions: [],
-  units: units,
+  units,
 };

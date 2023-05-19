@@ -10,7 +10,7 @@ import {
   recipeIngredients,
   recipeNutrients,
 } from '../mocks/Recipe';
-import {nutritions} from '../mocks/Nutrition';
+import {nutritionsExcessive} from '../mocks/Nutrition';
 import i18n from '../localization/_i18n';
 import IngredientList from '../components/mealkit/IngredientList';
 import MealkitNutrition from '../components/mealkit/MealkitNutrition';
@@ -89,7 +89,7 @@ function RecipeDetailModal(props: RecipeDetailModalProps): JSX.Element {
             </Text>
             <MealkitNutrition
               recipeNutrition={recipeNutrients}
-              nutrients={nutritions}
+              nutrients={nutritionsExcessive}
               units={units}
             />
 

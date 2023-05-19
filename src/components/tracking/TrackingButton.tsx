@@ -5,22 +5,17 @@ import {View} from 'react-native';
 export interface TrackingButtonProps {
   color: string;
   initialValue: number;
-  onPress: (args: number) => void;
+  onPress: () => void;
 }
 
 function TrackingButton(props: TrackingButtonProps): JSX.Element {
-  function handleOperation(): void {
-    // Do some shit
-    props.onPress(props.initialValue + props.initialValue / 2);
-  }
-
   return (
     <View style={{marginEnd: 1}}>
       <Button
         style={{paddingEnd: 0}}
         mode="text"
         onPress={() => {
-          handleOperation();
+          props.onPress();
         }}
         labelStyle={{
           fontSize: 26,

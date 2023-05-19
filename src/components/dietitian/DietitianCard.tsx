@@ -29,7 +29,9 @@ function DietitianCard(props: DietitianCardProps): JSX.Element {
       <View style={{justifyContent: 'space-between'}}>
         <View>
           <Text variant="titleLarge">
-            {props.dietitian.title + ' ' + props.dietitian.name}
+            {`${props.dietitian.title !== null ? props.dietitian.title : ''} ${
+              props.dietitian.name
+            }`}
           </Text>
           <Text variant="labelMedium" style={{marginTop: '3%'}}>
             {props.dietitian.address}

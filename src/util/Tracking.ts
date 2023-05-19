@@ -12,12 +12,18 @@ interface TrackingDate {
   date: Date;
 }
 
-export function todayOrLatest<T extends TrackingDate>(trackings: T[]): T {
-  const todaysTracking = trackings.find(tracking => isToday(tracking.date));
+export function todayOrLatest<T extends TrackingDate>(
+  trackings: T[],
+): T | null {
+  const todaysTracking = trackings.filter(tracking => isToday(tracking.date));
 
-  if (todaysTracking !== undefined) {
-    return todaysTracking;
+  if (todaysTracking.length > 0) {
+    return todaysTracking.slice(-1)[0];
   } else {
+    if (trackings.length === 0) {
+      return null;
+    }
+
     const latestTracking = trackings.reduce((prev, cur) =>
       prev.date > cur.date ? prev : cur,
     );
@@ -50,7 +56,9 @@ export function getFoodTrackingCalorie(
     trackingNutrients => trackingNutrients.trackingId === tracking.id,
   );
 
-  const nutrient = nutrients.find(n => n.name === 'Energy');
+  const nutrient = nutrients.find(
+    n => n.name === 'Energy' || n.name === 'Calories',
+  );
 
   if (nutrient !== undefined) {
     const energyTrackings = trackingNutrients.filter(

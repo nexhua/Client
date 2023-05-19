@@ -11,15 +11,22 @@ import {type FoundFood} from '../interfaces/tracking/FoundFood';
 import {
   type MealTypes,
   type FoodTracking,
+  type FoodTrackingNutrient,
 } from '../interfaces/health/trackings/FoodTracking';
 import NutrientDataTable from '../components/common/NutrientDataTable';
 import {getUser} from '../services/auth/Auth';
 import {Picker} from '@react-native-picker/picker';
+import {type FoodNutrient} from '../interfaces/nutrition/FoodNutrient';
+import {type Nutrient} from '../interfaces/nutrition/Nutrient';
+import {type Units} from '../interfaces/mealkit/Units';
 
 export interface FoodDetailProps {
   visible: boolean;
   onDismiss: () => void;
-  onTrack: (foodTracking: FoodTracking) => void;
+  onTrack: (
+    foodTracking: FoodTracking,
+    foodTrackingNutrients: FoodTrackingNutrient[],
+  ) => void;
   foundFood: FoundFood;
   referenceAmount: number;
   referenceUnitId: number;
@@ -74,9 +81,10 @@ function FoodDetailModal(props: FoodDetailProps): JSX.Element {
   function handleOnTrack(): void {
     const user = getUser();
 
+    const id = Math.floor(Math.random() * 100000);
     // // @ts-expect-error In the database missing properties id and generetadAt are auto generated. No need to include them.
     const newTracking: FoodTracking = {
-      id: Math.floor(Math.random() * 10000 + 1),
+      id: 0,
       foodId: props.foundFood.food.id,
       // @ts-expect-error user.uid is string but the database reference is number
       personId: user !== null ? user.uid : -1,
@@ -86,11 +94,19 @@ function FoodDetailModal(props: FoodDetailProps): JSX.Element {
       createdAt: new Date(),
       foodName: props.foundFood.food.name,
       meal: mealType,
-      unitId: measurementUnit.unitId.toString(),
+      unitId: measurementUnit.unitId,
       value: amount,
     };
 
-    props.onTrack(newTracking);
+    props.onTrack(
+      newTracking,
+      createFoodTrackingNutrients(
+        props.foundFood.foodNutrients,
+        props.foundFood.nutrients,
+        props.foundFood.units,
+        id,
+      ),
+    );
     props.onDismiss();
   }
 
@@ -167,7 +183,7 @@ function FoodDetailModal(props: FoodDetailProps): JSX.Element {
             />
 
             <NutrientDataTable
-              foodNutrients={props.foundFood.foodNutrients}
+              nutrientInfo={props.foundFood.foodNutrients}
               nutrients={props.foundFood.nutrients}
               units={props.foundFood.units}
               rate={rate}
@@ -209,5 +225,35 @@ const style = StyleSheet.create({
     bottom: 0,
   },
 });
+
+function createFoodTrackingNutrients(
+  foodNutrients: FoodNutrient[],
+  nutrients: Nutrient[],
+  units: Units[],
+  trackingId: number,
+): FoodTrackingNutrient[] {
+  const newFoodTrackingNutrients: FoodTrackingNutrient[] = [];
+
+  foodNutrients.map(f => {
+    const nutrient = nutrients.find(nutrient => nutrient.id === f.nutrientId);
+
+    if (nutrient !== undefined) {
+      const unit = units.find(unit => unit.id === nutrient.unitId);
+
+      if (unit !== undefined) {
+        newFoodTrackingNutrients.push({
+          id: Math.floor(Math.random() * 10000),
+          nutrientId: f.nutrientId,
+          trackingId,
+          amount: f.amount,
+        });
+      }
+    }
+
+    return f;
+  });
+
+  return newFoodTrackingNutrients;
+}
 
 export default FoodDetailModal;

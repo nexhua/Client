@@ -15,7 +15,7 @@ function MealkitNutrition(props: MealkitNutritionProps): JSX.Element {
   return (
     <View>
       <NutrientDataTable
-        foodNutrients={props.recipeNutrition}
+        nutrientInfo={props.recipeNutrition}
         nutrients={props.nutrients}
         units={props.units}
         rate={1.0}

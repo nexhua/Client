@@ -9,13 +9,13 @@ import {
   activityCategories,
   activities as mockActivities,
 } from '../mocks/Activity';
-import {calculateActivityCalorie} from '../util/Tracking';
+import {type ActivityTracking} from '../interfaces/health/trackings/ActivityTracking';
 
 export interface ActivityModalProps {
   weight: number;
   visible: boolean;
   onDismiss: () => void;
-  onTrackActivity: (calorie: number) => void;
+  onTrackActivity: (tracking: ActivityTracking) => void;
 }
 
 function ActivityModal(props: ActivityModalProps): JSX.Element {
@@ -59,18 +59,27 @@ function ActivityModal(props: ActivityModalProps): JSX.Element {
   }
 
   function trackActivity(): void {
+    const newActivityTracking: ActivityTracking = {
+      id: Math.floor(Math.random() * 10000),
+      activityId: null,
+      personId: 15,
+      calories: null,
+      duration: 0,
+      date: new Date(),
+      createdAt: new Date(),
+    };
+
     if (kcal > 0) {
-      props.onTrackActivity(kcal);
+      newActivityTracking.calories = kcal;
+
+      props.onTrackActivity(newActivityTracking);
       props.onDismiss();
     } else {
-      if (minutes > 0 && selectedActivity !== undefined) {
-        props.onTrackActivity(
-          calculateActivityCalorie(
-            selectedActivity.metRatio,
-            minutes,
-            props.weight,
-          ),
-        );
+      if (selectedActivity !== undefined && minutes > 0) {
+        newActivityTracking.activityId = selectedActivity.id;
+        newActivityTracking.duration = minutes;
+
+        props.onTrackActivity(newActivityTracking);
         props.onDismiss();
       }
     }

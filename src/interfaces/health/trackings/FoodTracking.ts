@@ -11,7 +11,7 @@ export interface FoodTracking {
   date: Date;
   foodName: string;
   meal: MealTypes;
-  unitId: string; // Kullanicinin girdiği miktarin birimi. Flags: private.
+  unitId: number; // Kullanicinin girdiği miktarin birimi. Flags: private.
   value: number; // Kullanicinin girdiği miktar.
 }
 

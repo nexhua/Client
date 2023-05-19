@@ -11,7 +11,13 @@ import SearchModal from '../../modals/SearchModal';
 import FoodDetailModal from '../../modals/FoodDetailModal';
 import ActivityModal from '../../modals/ActivityModal';
 import {type FoundFood} from '../../interfaces/tracking/FoundFood';
-import {type FoodTracking} from '../../interfaces/health/trackings/FoodTracking';
+import {
+  type FoodTrackingNutrient,
+  type FoodTracking,
+} from '../../interfaces/health/trackings/FoodTracking';
+import {type ActivityTracking} from '../../interfaces/health/trackings/ActivityTracking';
+import {type WeightTracking} from '../../interfaces/health/trackings/WeightTracking';
+import {type WaterTracking} from '../../interfaces/health/trackings/WaterTracking';
 
 export interface TrackingViewProps {
   person: Person;
@@ -19,8 +25,17 @@ export interface TrackingViewProps {
   water: number;
   burnedCalorie: number;
   dailyCalorie: number;
-  onFoodTrack: (foodTracking: FoodTracking) => void;
+  onFoodTrack: (
+    foodTracking: FoodTracking,
+    foodTrackingNutrients: FoodTrackingNutrient[],
+  ) => void;
+  onActivitiyTrack: (activityTracking: ActivityTracking) => void;
+  onWeightTrack: (weightTracking: WeightTracking) => void;
+  onWaterTrack: (waterTracking: WaterTracking) => void;
 }
+
+// Delay for the circular bar animation
+const animationDelay = 300;
 
 function TrackingView(props: TrackingViewProps): JSX.Element {
   const [weight, setWeight] = React.useState(props.weight);
@@ -33,6 +48,22 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
   const [visibleActivity, setVisibleActivity] = React.useState(false);
 
   const [foundFood, setFoundFood] = React.useState<FoundFood>();
+
+  React.useEffect(() => {
+    setBurnedCalorie(props.burnedCalorie);
+  }, [props.burnedCalorie]);
+
+  React.useEffect(() => {
+    setCalorie(props.dailyCalorie);
+  }, [props.dailyCalorie]);
+
+  React.useEffect(() => {
+    setWeight(props.weight);
+  }, [props.weight]);
+
+  React.useEffect(() => {
+    setWater(props.water);
+  }, [props.water]);
 
   const showSearchModal = (): void => {
     setVisibleSearch(true);
@@ -57,18 +88,39 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
     setVisibleActivity(false);
   };
 
-  function handleNutrition(newCalorie: number): void {
-    setCalorie(calorie + newCalorie);
-  }
-
   function onFoodFound(foundFood: FoundFood): void {
     hideSearchModal();
     setFoundFood(foundFood);
     showFoodDetailModal();
   }
 
-  function onTrackActivity(calorie: number): void {
-    setBurnedCalorie(burnedCalorie + calorie);
+  function handleWeightChange(newWeight: number): void {
+    const newWeightTracking: WeightTracking = {
+      id: Math.floor(Math.random() * 10000),
+      personId: 15,
+      bodyFatRatio: null,
+      bodyWaterRatio: null,
+      bodyWeight: newWeight,
+      boneMassRatio: null,
+      createdAt: new Date(),
+      date: new Date(),
+      muscleMassRatio: null,
+      skeletalMuscleRatio: null,
+    };
+
+    props.onWeightTrack(newWeightTracking);
+  }
+
+  function handleWaterChange(difference: number): void {
+    const waterTracking: WaterTracking = {
+      id: Math.floor(Math.random() * 10000),
+      personId: 15,
+      createdAt: new Date(),
+      date: new Date(),
+      value: difference,
+    };
+
+    props.onWaterTrack(waterTracking);
   }
 
   const theme = useAppTheme();
@@ -92,8 +144,8 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
             minValue: 0,
             maxValue: props.person.calorieGoal,
             currentValue: calorie,
-            animationDuration: 1000,
-            delay: 0,
+            animationDuration: 500,
+            delay: animationDelay,
             hasIcon: true,
             iconName: 'silverware-variant',
             iconSize: 40,
@@ -101,9 +153,8 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
           }}
           trackingButtonProps={{
             color: 'orange',
-            onPress: (calorie: number) => {
+            onPress: () => {
               showSearchModal();
-              handleNutrition(calorie);
             },
             initialValue: calorie,
           }}
@@ -126,7 +177,7 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
             maxValue: props.person.activityGoal,
             currentValue: burnedCalorie,
             animationDuration: 500,
-            delay: 0,
+            delay: animationDelay,
             hasIcon: true,
             iconName: 'swim',
             iconSize: 40,
@@ -134,7 +185,7 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
           }}
           trackingButtonProps={{
             color: 'olivedrab',
-            onPress: (calorie: number) => {
+            onPress: () => {
               showActivityModal();
             },
             initialValue: burnedCalorie,
@@ -166,7 +217,7 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
               onChange={num => {
                 const parsedInt = parseInt(String(num), 10);
                 if (!Number.isNaN(parsedInt)) {
-                  setWeight(parsedInt);
+                  handleWeightChange(parsedInt);
                 }
               }}
               skin="modern"
@@ -181,7 +232,7 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
             maxValue: 200,
             currentValue: weight,
             animationDuration: 500,
-            delay: 100,
+            delay: animationDelay,
             hasIcon: true,
             iconName: 'weight-kilogram',
             iconSize: 40,
@@ -206,7 +257,8 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
               onChange={num => {
                 const parsedInt = parseInt(String(num), 10);
                 if (!Number.isNaN(parsedInt)) {
-                  setWater(parsedInt);
+                  const diff = parsedInt - water;
+                  handleWaterChange(diff);
                 }
               }}
               skin="modern"
@@ -221,7 +273,7 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
             maxValue: props.person.gender === 'm' ? 3000 : 2200,
             currentValue: water,
             animationDuration: 500,
-            delay: 0,
+            delay: animationDelay,
             hasIcon: true,
             iconName: 'water',
             iconSize: 40,
@@ -259,7 +311,7 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
           weight={weight}
           visible={visibleActivity}
           onDismiss={hideActivityModal}
-          onTrackActivity={onTrackActivity}></ActivityModal>
+          onTrackActivity={props.onActivitiyTrack}></ActivityModal>
       </Portal>
     </ScrollView>
   );

@@ -3,14 +3,14 @@
 
 export interface Nutritionist {
   id: number;
-  addressId: number;
+  addressId: number | null;
   userId: number;
-  address: string;
-  biography: string;
+  address: string | null;
+  biography: string | null;
   isAvailable: boolean;
   isDietitian: boolean;
   isVisible: boolean;
   name: string;
-  photoUrl: string;
-  title: string;
+  photoUrl: string | null;
+  title: string | null;
 }

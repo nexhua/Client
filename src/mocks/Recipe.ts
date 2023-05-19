@@ -503,7 +503,7 @@ export const recipeNutrients: RecipeNutrients[] = [
     id: 0,
     nutrientId: 0,
     recipeId: 2131,
-    amount: 0,
+    amount: 2,
   },
   {
     id: 1,

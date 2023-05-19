@@ -14,7 +14,7 @@ export const foodTrackings: FoodTracking[] = [
     date: new Date(),
     foodName: 'Beef',
     meal: 'dinner',
-    unitId: 'g',
+    unitId: 8,
     value: 6,
   },
   {
@@ -27,7 +27,7 @@ export const foodTrackings: FoodTracking[] = [
     date: new Date(),
     foodName: 'Beef',
     meal: 'lunch',
-    unitId: 'g',
+    unitId: 8,
     value: 2,
   },
 ];

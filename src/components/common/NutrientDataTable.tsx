@@ -11,7 +11,7 @@ export interface NutrientReference {
 }
 
 export interface NutrientDataTableProps<T extends NutrientReference> {
-  foodNutrients: T[];
+  nutrientInfo: T[];
   nutrients: Nutrient[];
   units: Units[];
   rate: number;
@@ -25,12 +25,12 @@ function NutrientDataTable<T extends NutrientReference>(
   const from = page * numberOfItemsPerPage;
   const to = Math.min(
     (page + 1) * numberOfItemsPerPage,
-    props.foodNutrients.length,
+    props.nutrientInfo.length,
   );
 
-  function createRow(foodNutrient: T, key: number): JSX.Element {
+  function createRow(nutrientInfo: T, key: number): JSX.Element {
     const nutrient = props.nutrients.find(
-      nutrient => nutrient.id === foodNutrient.nutrientId,
+      nutrient => nutrient.id === nutrientInfo.nutrientId,
     );
 
     const unit = props.units.find(elem => elem.id === nutrient?.unitId);
@@ -40,10 +40,12 @@ function NutrientDataTable<T extends NutrientReference>(
         <DataTable.Cell>{nutrient?.name}</DataTable.Cell>
         <DataTable.Cell>
           {props.rate !== 1.0
-            ? (foodNutrient.amount * props.rate).toFixed(1)
-            : foodNutrient.amount}
+            ? (nutrientInfo.amount * props.rate).toFixed(1)
+            : nutrientInfo.amount}
         </DataTable.Cell>
-        <DataTable.Cell>{unit?.name}</DataTable.Cell>
+        <DataTable.Cell>
+          {unit?.symbol !== null ? unit?.symbol : unit?.name}
+        </DataTable.Cell>
       </DataTable.Row>
     );
   }
@@ -61,24 +63,24 @@ function NutrientDataTable<T extends NutrientReference>(
           <DataTable.Title>{i18n.t('unit')}</DataTable.Title>
         </DataTable.Header>
 
-        {props.foodNutrients
+        {props.nutrientInfo
           .slice(
             page * numberOfItemsPerPage,
             page * numberOfItemsPerPage + numberOfItemsPerPage,
           )
-          .map((foodNutrient, i) => {
-            return createRow(foodNutrient, i);
+          .map((nutrientInfo, i) => {
+            return createRow(nutrientInfo, i);
           })}
 
         <DataTable.Pagination
           page={page}
           numberOfPages={Math.ceil(
-            props.foodNutrients.length / numberOfItemsPerPage,
+            props.nutrientInfo.length / numberOfItemsPerPage,
           )}
           onPageChange={page => {
             setPage(page);
           }}
-          label={`${from + 1}-${to} of ${props.foodNutrients.length}`}
+          label={`${from + 1}-${to} of ${props.nutrientInfo.length}`}
           showFastPaginationControls
           numberOfItemsPerPage={numberOfItemsPerPage}
           selectPageDropdownLabel={'Rows per page'}

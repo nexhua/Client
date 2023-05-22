@@ -18,6 +18,10 @@ import {subscribe} from './src/services/auth/Auth';
 import Main from './src/pages/Main';
 import i18n from './src/localization/_i18n';
 
+import {enGB, tr, registerTranslation} from 'react-native-paper-dates';
+registerTranslation('en-GB', enGB);
+registerTranslation('tr', tr);
+
 const Stack = createNativeStackNavigator<StackParamList>();
 
 function App(): JSX.Element {

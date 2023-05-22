@@ -3,7 +3,7 @@ import {type NutritionistAppointment} from '../../interfaces/dietitian/Appointme
 import {Image, View} from 'react-native';
 import {useAppTheme} from '../../style/Theme';
 import {type NutritionistClient} from '../../interfaces/dietitian/Client';
-import {Divider, Text} from 'react-native-paper';
+import {Divider, IconButton, Text} from 'react-native-paper';
 import i18n from '../../localization/_i18n';
 import {type Nutritionist} from '../../interfaces/dietitian/Dietitian';
 import Icon from 'react-native-paper/src/components/Icon';
@@ -11,8 +11,10 @@ import {toDateTimeString} from '../../util/Time';
 
 export interface AppointmentCardProps {
   nutritionist: Nutritionist;
-  appointment: NutritionistAppointment;
   client: NutritionistClient;
+  appointment: NutritionistAppointment;
+  isDeletable: boolean;
+  onDelete?: (appointment: NutritionistAppointment) => void;
 }
 
 function AppointmentCard(props: AppointmentCardProps): JSX.Element {
@@ -32,16 +34,41 @@ function AppointmentCard(props: AppointmentCardProps): JSX.Element {
         borderRadius: 10,
         elevation: 5,
       }}>
-      <Text variant="titleSmall" style={{color: theme.colors.muted}}>
-        {i18n.t('appointment-date')}
-      </Text>
-
       <View
-        style={{flexDirection: 'row', marginTop: '2%', alignItems: 'center'}}>
-        <Icon size={20} source={'clock'} color={theme.colors.primary} />
-        <Text variant="bodyMedium" style={{paddingLeft: '2%'}}>
-          {toDateTimeString(props.appointment.dateTime)}
-        </Text>
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+        <View>
+          <Text variant="titleSmall" style={{color: theme.colors.muted}}>
+            {i18n.t('appointment-date')}
+          </Text>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: '2%',
+              alignItems: 'center',
+            }}>
+            <Icon size={20} source={'clock'} color={theme.colors.primary} />
+            <Text variant="bodyMedium" style={{paddingLeft: '2%'}}>
+              {toDateTimeString(props.appointment.dateTime)}
+            </Text>
+          </View>
+        </View>
+
+        {props.isDeletable && (
+          <IconButton
+            iconColor={theme.colors.muted}
+            icon={'delete'}
+            size={20}
+            onPress={() => {
+              if (props.onDelete !== undefined) {
+                props.onDelete(props.appointment);
+              }
+            }}
+          />
+        )}
       </View>
 
       <Divider bold={true} style={{marginVertical: '3%'}} />

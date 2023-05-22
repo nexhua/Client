@@ -8,7 +8,8 @@ export const dietitian: Nutritionist = {
   addressId: 2133213,
   userId: 213213,
   address: 'Mebusevleri Şirin Sokak 22/7',
-  biography: 'Gazi Üniversitesi Mezunu',
+  biography:
+    'İlknur is a Registered Dietitian Nutritionist, member of the Forbes Health Advisory Board, former media spokesperson for the Academy of Nutrition and Dietetics, and founder of eyas.com, a nutrition lifestyle company dedicated to providing modern moms with tools, recipes, and programs that make it easier to feed their families a mostly plant based, nutrient-dense, whole food diet (that they really like).',
   isAvailable: true,
   isDietitian: true,
   isVisible: true,
@@ -20,7 +21,7 @@ export const dietitian: Nutritionist = {
 
 export const clients: NutritionistClient[] = [
   {
-    id: 0,
+    id: 27,
     nutritionistId: 213123,
     userId: 15,
     name: 'John Doe',
@@ -29,7 +30,7 @@ export const clients: NutritionistClient[] = [
     privateNotes: null,
   },
   {
-    id: 1,
+    id: 25,
     nutritionistId: 213123,
     userId: 16,
     name: 'Jeremy Clarkson',
@@ -38,7 +39,7 @@ export const clients: NutritionistClient[] = [
     privateNotes: null,
   },
   {
-    id: 2,
+    id: 30,
     nutritionistId: 213123,
     userId: 17,
     name: 'James May',
@@ -47,7 +48,7 @@ export const clients: NutritionistClient[] = [
     privateNotes: null,
   },
   {
-    id: 3,
+    id: 34,
     nutritionistId: 213123,
     userId: 25,
     name: 'Richard Hammond',
@@ -61,8 +62,8 @@ export const appointments: NutritionistAppointment[] = [
   {
     id: 0,
     clientId: 27,
-    createdAt: new Date('Fri May 15 2023 14:00:00 GMT+0300 (GMT+03:00)'),
-    dateTime: new Date('Fri May 15 2023 14:00:00 GMT+0300 (GMT+03:00)'),
+    createdAt: new Date('Fri May 18 2023 13:00:00 GMT+0300 (GMT+03:00)'),
+    dateTime: new Date('Fri May 18 2023 13:00:00 GMT+0300 (GMT+03:00)'),
     notes: 'Lütfen ölçüm yapılabilmesi için aç geliniz.',
   },
   {
@@ -75,44 +76,44 @@ export const appointments: NutritionistAppointment[] = [
   {
     id: 2,
     clientId: 27,
-    createdAt: new Date('Fri May 15 2023 14:00:00 GMT+0300 (GMT+03:00)'),
-    dateTime: new Date('Fri May 15 2023 14:00:00 GMT+0300 (GMT+03:00)'),
+    createdAt: new Date('Fri May 12 2023 16:00:00 GMT+0300 (GMT+03:00)'),
+    dateTime: new Date('Fri May 12 2023 16:00:00 GMT+0300 (GMT+03:00)'),
     notes: null,
   },
   {
     id: 3,
-    clientId: 27,
+    clientId: 30,
     createdAt: new Date('Fri May 15 2023 14:00:00 GMT+0300 (GMT+03:00)'),
     dateTime: new Date('Fri May 15 2023 14:00:00 GMT+0300 (GMT+03:00)'),
     notes: null,
   },
   {
     id: 4,
-    clientId: 27,
+    clientId: 34,
     createdAt: new Date('Fri May 15 2023 14:00:00 GMT+0300 (GMT+03:00)'),
     dateTime: new Date('Fri May 15 2023 14:00:00 GMT+0300 (GMT+03:00)'),
     notes: null,
   },
   {
     id: 5,
-    clientId: 27,
+    clientId: 25,
     createdAt: new Date('Fri May 15 2023 14:00:00 GMT+0300 (GMT+03:00)'),
     dateTime: new Date('Fri May 15 2023 14:00:00 GMT+0300 (GMT+03:00)'),
     notes: null,
   },
-  {...randomAppointment(6)},
-  {...randomAppointment(7)},
-  {...randomAppointment(8)},
-  {...randomAppointment(9)},
-  {...randomAppointment(10)},
-  {...randomAppointment(11)},
-  {...randomAppointment(12)},
-  {...randomAppointment(13)},
-  {...randomAppointment(14)},
-  {...randomAppointment(15)},
-  {...randomAppointment(16)},
-  {...randomAppointment(17)},
-  {...randomAppointment(18)},
+  {...randomAppointment(6, 30)},
+  {...randomAppointment(7, 25)},
+  {...randomAppointment(8, 25)},
+  {...randomAppointment(9, 25)},
+  {...randomAppointment(10, 30)},
+  {...randomAppointment(11, 25)},
+  {...randomAppointment(12, 25)},
+  {...randomAppointment(13, 30)},
+  {...randomAppointment(14, 25)},
+  {...randomAppointment(15, 30)},
+  {...randomAppointment(16, 30)},
+  {...randomAppointment(17, 27)},
+  {...randomAppointment(18, 30)},
 ];
 
 export const workingHours: WorkingHours[] = [
@@ -160,7 +161,10 @@ export const workingHours: WorkingHours[] = [
   },
 ];
 
-function randomAppointment(id: number): NutritionistAppointment {
+function randomAppointment(
+  id: number,
+  userId: number,
+): NutritionistAppointment {
   const date = new Date();
 
   date.setDate(date.getDate() + 2);
@@ -180,5 +184,11 @@ function randomAppointment(id: number): NutritionistAppointment {
 
   date.setHours(randomHour, randomMinute, 0, 0);
 
-  return {id, clientId: 27, createdAt: new Date(), dateTime: date, notes: null};
+  return {
+    id,
+    clientId: userId,
+    createdAt: new Date(),
+    dateTime: date,
+    notes: null,
+  };
 }

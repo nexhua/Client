@@ -82,7 +82,13 @@
   "appointment-date": "Randevu Tarihi",
   "save": "Kaydet",
   "create-appointment": "Randevu Oluştur",
+  "your-appointments": "Randevularınız",
+  "past-appointments": "Geçmiş Randevularınız",
   "select-day": "Gün Seçiniz",
   "date-not-selected": "Lütfen Gün Seçiniz",
-  "cancel": "İptal"
+  "cancel": "İptal",
+  "see-all": "Hepsini Gör",
+  "see-active": "Aktifleri Gör",
+  "no-active-appointments-warning": "Aktif randevu kaydınız bulunmamaktadır.",
+  "no-past-appointments-warning": "Geçmiş randevu kaydınız bulunmamaktadır."
 }

@@ -82,7 +82,13 @@
   "appointment-date": "Appointment Date",
   "save": "Save",
   "create-appointment": "Create Appointment",
+  "your-appointments": "Your Appointments",
+  "past-appointments": "Past Appointments",
   "select-day": "Select Day",
   "date-not-selected": "Please Select A Date",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "see-all": "See All",
+  "see-active": "See Active",
+  "no-active-appointments-warning": "You don't have any active appointments.",
+  "no-past-appointments-warning": "You don't have any past appointments."
 }

@@ -4,11 +4,11 @@ export const users: User[] = [
   {
     id: 15,
     createdAt: new Date(),
-    email: null,
+    email: 'random@gmail.com',
     isDisabled: false,
     isEmailVerified: false,
     locale: null,
-    name: null,
+    name: 'John',
     phoneNumber: null,
     photoUrl: null,
     providerId: null,

@@ -22,6 +22,7 @@ import {
   userAddresses as mockUserAddresses,
   address as addresses,
 } from '../mocks/Address';
+import More from './More';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -136,6 +137,20 @@ function Main({route, navigation}: MainProps): JSX.Element {
                   </Badge>
                 </View>
               </View>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="More"
+          component={More}
+          options={{
+            title: i18n.t('settings'),
+            tabBarIcon: ({focused, color, size}) => (
+              <Icon
+                source={'dots-horizontal-circle'}
+                size={size}
+                color={color}
+              />
             ),
           }}
         />

@@ -90,5 +90,19 @@
   "see-all": "See All",
   "see-active": "See Active",
   "no-active-appointments-warning": "You don't have any active appointments.",
-  "no-past-appointments-warning": "You don't have any past appointments."
+  "no-past-appointments-warning": "You don't have any past appointments.",
+  "settings": "Settings",
+  "my-account": "Your Account",
+  "my-email": "Your Email",
+  "my-password": "Your Password",
+  "name": "Your Name",
+  "cell-no": "Cell Number",
+  "name-placeholder": "Enter Your Name",
+  "email-placeholder": "Enter Your Email",
+  "cell-no-placeholder": "Enter Your Cell Number",
+  "day": "Day",
+  "year": "Year",
+  "email-verified": "Email is verified",
+  "email-not-verified": "Email is not verified",
+  "send-password-reset": "Reset Password"
 }

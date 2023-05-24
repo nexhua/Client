@@ -90,5 +90,19 @@
   "see-all": "Hepsini Gör",
   "see-active": "Aktifleri Gör",
   "no-active-appointments-warning": "Aktif randevu kaydınız bulunmamaktadır.",
-  "no-past-appointments-warning": "Geçmiş randevu kaydınız bulunmamaktadır."
+  "no-past-appointments-warning": "Geçmiş randevu kaydınız bulunmamaktadır.",
+  "settings": "Ayarlar",
+  "my-account": "Hesabım",
+  "my-email": "Email Adresiniz",
+  "my-password": "Şifreniz",
+  "name": "Adınız",
+  "cell-no": "Telefon Numarası",
+  "name-placeholder": "Adınızı Giriniz",
+  "email-placeholder": "Email Adresinizi Girin",
+  "cell-no-placeholder": "Telefon Numaranızı Giriniz",
+  "day": "Gün",
+  "year": "Yıl",
+  "email-verified": "Emailiniz doğrulanmış",
+  "email-not-verified": "Emailiniz doğrulanmamış",
+  "send-password-reset": "Şifrenizi Sıfırlayın"
 }

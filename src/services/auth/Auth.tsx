@@ -102,3 +102,27 @@ export async function googleSignIn(): Promise<FirebaseAuthTypes.UserCredential> 
 export function getUser(): FirebaseAuthTypes.User | null {
   return auth().currentUser;
 }
+
+export async function verifyUserEmail(
+  onSuccess?: () => void,
+  onError?: (args: any) => void,
+): Promise<void> {
+  const user = getUser();
+
+  if (user !== null) {
+    await user
+      .sendEmailVerification()
+      .then(() => {
+        if (onSuccess !== undefined) {
+          console.log('Send verification email.');
+          onSuccess();
+        }
+      })
+      .catch((err: any) => {
+        if (onError !== undefined) {
+          console.log(err);
+          onError(err);
+        }
+      });
+  }
+}

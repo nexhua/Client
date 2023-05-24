@@ -1,8 +1,7 @@
 import React from 'react';
 import {type Person} from '../../interfaces/health/Person';
 import {ScrollView, View} from 'react-native';
-import {Button, Portal} from 'react-native-paper';
-import {SignOut} from '../../services/auth/Auth';
+import {Portal} from 'react-native-paper';
 import TrackingCard from '../../components/tracking/TrackingCard';
 import i18n from '../../localization/_i18n';
 import InputSpinner from 'react-native-input-spinner';
@@ -281,15 +280,6 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
           }}
         />
       </View>
-
-      <Button
-        style={{alignSelf: 'flex-end'}}
-        mode="contained"
-        onPress={() => {
-          SignOut();
-        }}>
-        {i18n.t('sign-out')}
-      </Button>
 
       <Portal>
         <SearchModal

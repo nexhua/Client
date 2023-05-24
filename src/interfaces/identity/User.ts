@@ -4,7 +4,6 @@
 export interface User {
   id: number;
   createdAt: Date;
-
   email: string | null;
   isDisabled: boolean;
   isEmailVerified: boolean;

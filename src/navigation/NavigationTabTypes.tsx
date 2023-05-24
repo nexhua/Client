@@ -8,6 +8,7 @@ type BottomTabParamList = {
   Tracking: undefined;
   Dietitian: undefined;
   Mealkit: undefined;
+  More: undefined;
   Search: undefined;
   TrackFood: undefined;
 };
@@ -24,5 +25,14 @@ type MealkitProps = CompositeScreenProps<
   BottomTabScreenProps<BottomTabParamList, 'Mealkit'>,
   NativeStackScreenProps<StackParamList>
 >;
-
-export type {BottomTabParamList, TrackingProps, DietitianProps, MealkitProps};
+type MoreProps = CompositeScreenProps<
+  BottomTabScreenProps<BottomTabParamList, 'More'>,
+  NativeStackScreenProps<StackParamList>
+>;
+export type {
+  BottomTabParamList,
+  TrackingProps,
+  DietitianProps,
+  MealkitProps,
+  MoreProps,
+};

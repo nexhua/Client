@@ -8,10 +8,12 @@ import {useAppTheme} from '../style/Theme';
 import {Button, Portal} from 'react-native-paper';
 import i18n from '../localization/_i18n';
 import SettingsModal from '../modals/SettingsModal';
+import SurveyModal from '../modals/SurveyModal';
 
 function More(): JSX.Element {
   const [user, setUser] = React.useState<User>();
   const [settingsModal, setSettingsModal] = React.useState(false);
+  const [surveyModal, setSurveyModal] = React.useState(false);
 
   React.useEffect(() => {
     const firebaseId = getUser()?.uid;
@@ -42,6 +44,14 @@ function More(): JSX.Element {
           style={style.button}
           mode="text"
           onPress={() => {
+            setSurveyModal(true);
+          }}>
+          {i18n.t('survey')}
+        </Button>
+        <Button
+          style={style.button}
+          mode="text"
+          onPress={() => {
             setSettingsModal(true);
           }}>
           {i18n.t('settings')}
@@ -66,6 +76,13 @@ function More(): JSX.Element {
             }}
           />
         )}
+
+        <SurveyModal
+          visible={surveyModal}
+          onDismiss={() => {
+            setSurveyModal(false);
+          }}
+        />
       </Portal>
     </View>
   );

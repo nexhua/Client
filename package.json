@@ -21,6 +21,7 @@
     "@react-navigation/native-stack": "^6.9.12",
     "@types/i18n-js": "^3.8.4",
     "i18n-js": "^4.2.3",
+    "jsonapi-react-native": "^0.0.2",
     "pod-install": "^0.1.38",
     "react": "18.2.0",
     "react-native": "0.71.6",

@@ -104,5 +104,6 @@
   "year": "Year",
   "email-verified": "Email is verified",
   "email-not-verified": "Email is not verified",
-  "send-password-reset": "Reset Password"
+  "send-password-reset": "Reset Password",
+  "survey": "Survey"
 }

@@ -19,10 +19,24 @@ import Main from './src/pages/Main';
 import i18n from './src/localization/_i18n';
 
 import {enGB, tr, registerTranslation} from 'react-native-paper-dates';
+
+import {ApiClient, ApiProvider} from 'jsonapi-react-native';
+
 registerTranslation('en-GB', enGB);
 registerTranslation('tr', tr);
 
 const Stack = createNativeStackNavigator<StackParamList>();
+
+const schema = {
+  recipes: {
+    type: 'recipes',
+  },
+};
+
+const client = new ApiClient({
+  url: 'https://localhost:37002',
+  schema: schema,
+});
 
 function App(): JSX.Element {
   const [isThemeDark, setIsThemeDark] = useState(false);
@@ -57,39 +71,41 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <PreferencesContext.Provider value={preferences}>
-      <PaperProvider theme={theme}>
-        <NavigationContainer theme={theme}>
-          <Stack.Navigator initialRouteName="SignIn">
-            {user === null ? (
-              <>
-                <Stack.Screen
-                  name="SignUp"
-                  component={SignUp}
-                  options={{
-                    title: i18n.t('sign-up'),
-                    headerTitleAlign: 'center',
-                  }}
-                />
-                <Stack.Screen
-                  name="SignIn"
-                  component={SignIn}
-                  options={{headerShown: false}}
-                />
-              </>
-            ) : (
-              <>
-                <Stack.Screen
-                  name="Main"
-                  component={Main}
-                  options={{headerShown: false}}
-                />
-              </>
-            )}
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
-    </PreferencesContext.Provider>
+    <ApiProvider client={client}>
+      <PreferencesContext.Provider value={preferences}>
+        <PaperProvider theme={theme}>
+          <NavigationContainer theme={theme}>
+            <Stack.Navigator initialRouteName="SignIn">
+              {user === null ? (
+                <>
+                  <Stack.Screen
+                    name="SignUp"
+                    component={SignUp}
+                    options={{
+                      title: i18n.t('sign-up'),
+                      headerTitleAlign: 'center',
+                    }}
+                  />
+                  <Stack.Screen
+                    name="SignIn"
+                    component={SignIn}
+                    options={{headerShown: false}}
+                  />
+                </>
+              ) : (
+                <>
+                  <Stack.Screen
+                    name="Main"
+                    component={Main}
+                    options={{headerShown: false}}
+                  />
+                </>
+              )}
+            </Stack.Navigator>
+          </NavigationContainer>
+        </PaperProvider>
+      </PreferencesContext.Provider>
+    </ApiProvider>
   );
 }
 

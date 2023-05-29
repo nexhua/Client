@@ -30,11 +30,25 @@ const Stack = createNativeStackNavigator<StackParamList>();
 const schema = {
   recipes: {
     type: 'recipes',
+    relationships: {
+      utensils: {
+        type: 'utensils',
+      },
+      nutrients: {
+        type: 'nutrients',
+      },
+      instructions: {
+        type: 'instructions',
+      },
+      ingredients: {
+        type: 'ingredients',
+      },
+    },
   },
 };
 
 const client = new ApiClient({
-  url: 'https://localhost:37002',
+  url: 'http://192.168.0.14:37001',
   schema: schema,
 });
 

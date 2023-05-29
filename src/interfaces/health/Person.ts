@@ -17,7 +17,7 @@ export interface Person {
   menopauseDate: Date | null;
   menstrualCycleDays: number | null;
   pregnancyDueDate: Date | null;
-  mainGoal: 'lostWeight' | 'gainWeight' | 'buildMuscle';
+  mainGoal: MainGoals;
   activityGoal: number; // Unit: cal/day.
   calorieGoal: number; // Unit: cal/day.
   stepsGoal: number; // Unit: steps/day.
@@ -52,3 +52,10 @@ export interface PersonDiseases {
   diseaseId: number;
   personId: number;
 }
+
+export const MaingGoalValues = [
+  'lostWeight',
+  'gainWeight',
+  'buildMuscle',
+] as const;
+export type MainGoals = 'lostWeight' | 'gainWeight' | 'buildMuscle';

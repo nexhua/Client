@@ -105,5 +105,18 @@
   "email-verified": "Email is verified",
   "email-not-verified": "Email is not verified",
   "send-password-reset": "Reset Password",
-  "survey": "Survey"
+  "survey": "Survey",
+  "weight-goal": "Weight Goal (KG)",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "age": "Age",
+  "height-cm": "Height (cm)",
+  "height": "Height",
+  "weight-current": "Current Weight (KG)",
+  "disease": "Disease",
+  "diseases": "Diseases",
+  "lose-weight": "Lose Weight",
+  "gain-weight": "Gain Weight",
+  "build-muscle": "Build Muscle"
 }

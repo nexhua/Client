@@ -105,5 +105,18 @@
   "email-verified": "Emailiniz doğrulanmış",
   "email-not-verified": "Emailiniz doğrulanmamış",
   "send-password-reset": "Şifrenizi Sıfırlayın",
-  "survey": "Anket"
+  "survey": "Anket",
+  "weight-goal": "Hedef Kilo (KG)",
+  "gender": "Cinsiyetiniz",
+  "male": "Erkek",
+  "female": "Kadın",
+  "age": "Yaş",
+  "height-cm": "Boyunuz (cm)",
+  "height": "Boy",
+  "weight-current": "Güncel Kilonuz (KG)",
+  "disease": "Hastalık",
+  "diseases": "Hastalıklarınız",
+  "lose-weight": "Kilo Ver",
+  "gain-weight": "Kilo Al",
+  "build-muscle": "Kas Yap"
 }

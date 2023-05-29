@@ -1,68 +1,33 @@
 import React from 'react';
 import TimelineCircle, {type TimelineCircleProps} from './TimelineCircle';
 import {StyleSheet, View} from 'react-native';
-import {Divider, Text} from 'react-native-paper';
+import {Divider} from 'react-native-paper';
 import {useAppTheme} from '../../style/Theme';
 
 export interface TimelineProps {
-  circles: TimelineCircleProps[];
+  labels: string[];
+  activeLabel: string;
+  onPress: (label: string) => void;
 }
 
-const operations: Array<TimelineCircleProps<any>> = [
-  {
-    label: '1',
-    isSelected: false,
-    onPress: () => {
-      return <Text>{1}</Text>;
-    },
-    handler: (args: string) => {
-      console.log(args);
-    },
-  },
-  {
-    label: '2',
-    isSelected: false,
-    onPress: () => {
-      return <Text>{2}</Text>;
-    },
-    handler: (args: string) => {
-      console.log(args);
-    },
-  },
-  {
-    label: '3',
-    isSelected: false,
-    onPress: () => {
-      return <Text>{3}</Text>;
-    },
-    handler: (args: string) => {
-      console.log(args);
-    },
-  },
-  {
-    label: '4',
-    isSelected: false,
-    onPress: () => {
-      return <Text>{4}</Text>;
-    },
-    handler: (args: string) => {
-      console.log(args);
-    },
-  },
-  {
-    label: '5',
-    isSelected: false,
-    onPress: () => {
-      return <Text>{5}</Text>;
-    },
-    handler: (args: string) => {
-      console.log(args);
-    },
-  },
-];
-
 function Timeline(props: TimelineProps): JSX.Element {
-  const [timelines, setTimelines] = React.useState(operations);
+  const [timelines, setTimelines] = React.useState<TimelineCircleProps[]>([]);
+
+  React.useEffect(() => {
+    const circleProps: TimelineCircleProps[] = [];
+
+    for (let i = 0; i < props.labels.length; i++) {
+      const prop: TimelineCircleProps = {
+        label: props.labels[i],
+        isSelected: props.labels[i] === props.activeLabel,
+        onPress: updateTimelines,
+      } satisfies TimelineCircleProps;
+
+      circleProps.push(prop);
+    }
+
+    setTimelines(circleProps);
+  }, []);
 
   function updateTimelines(label: string): void {
     const newTimelines = [...timelines];
@@ -76,8 +41,8 @@ function Timeline(props: TimelineProps): JSX.Element {
       });
       newTimelines[foundIndex].isSelected = true;
 
-      console.log(label);
       setTimelines(newTimelines);
+      props.onPress(label);
     }
   }
 
@@ -85,14 +50,13 @@ function Timeline(props: TimelineProps): JSX.Element {
 
   return (
     <View style={style.container}>
-      {timelines.map((timeline, i) => {
+      {take(timelines, 5, props.activeLabel).map((prop, i) => {
         return (
           <TimelineCircle
             key={i}
-            label={timeline.label}
-            isSelected={timeline.isSelected}
+            label={prop.label}
+            isSelected={prop.isSelected}
             onPress={updateTimelines}
-            handler={timeline.handler}
           />
         );
       })}
@@ -104,6 +68,46 @@ function Timeline(props: TimelineProps): JSX.Element {
       />
     </View>
   );
+}
+
+function take(
+  timelines: TimelineCircleProps[],
+  count: number,
+  activeLabel: string,
+): TimelineCircleProps[] {
+  const taken = [];
+
+  if (timelines.length <= count) {
+    return timelines;
+  } else {
+    const activeIndex = timelines.findIndex(t => t.label === activeLabel);
+
+    if (activeIndex === -1) {
+      return timelines.slice(0, 5);
+    } else {
+      taken.push(timelines[activeIndex]);
+
+      let i = count - 1;
+      let left = activeIndex - 1;
+      let right = activeIndex + 1;
+
+      while (i > 0) {
+        if (left >= 0) {
+          taken.push(timelines[left]);
+          i -= 1;
+          left -= 1;
+        }
+
+        if (right < timelines.length) {
+          taken.push(timelines[right]);
+          i -= 1;
+          right += 1;
+        }
+      }
+    }
+  }
+
+  return taken.sort((a, b) => parseInt(a.label) - parseInt(b.label));
 }
 
 const style = StyleSheet.create({

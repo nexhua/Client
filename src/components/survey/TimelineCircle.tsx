@@ -3,14 +3,19 @@ import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import {useAppTheme} from '../../style/Theme';
 
-export interface TimelineCircleProps<T> {
+export interface TimelineCircleProps {
   label: string;
   isSelected: boolean;
   onPress: (label: string) => void;
-  handler?: (args: T) => void;
 }
 
-function TimelineCircle<T>(props: TimelineCircleProps<T>): JSX.Element {
+function TimelineCircle(props: TimelineCircleProps): JSX.Element {
+  const [isSelected, setIsSelected] = React.useState(props.isSelected);
+
+  React.useEffect(() => {
+    setIsSelected(props.isSelected);
+  }, [props.isSelected]);
+
   const theme = useAppTheme();
 
   return (
@@ -21,7 +26,7 @@ function TimelineCircle<T>(props: TimelineCircleProps<T>): JSX.Element {
       <View
         style={{
           ...style.container,
-          backgroundColor: !props.isSelected
+          backgroundColor: !isSelected
             ? theme.colors.primaryContainer
             : theme.colors.background,
           borderColor: theme.colors.primary,

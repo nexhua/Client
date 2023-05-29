@@ -35,7 +35,7 @@ function EmailSettings(props: EmailSettingsProps): JSX.Element {
   function verifyEmail(): void {
     if (firebaseUser !== null) {
       const firebaseEmail = firebaseUser.email;
-      console.log(firebaseEmail === email);
+
       if (firebaseEmail !== null && firebaseEmail === email) {
         void verifyUserEmail();
       }

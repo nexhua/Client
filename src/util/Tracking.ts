@@ -2,11 +2,13 @@ import {type ActivityTracking} from '../interfaces/health/trackings/ActivityTrac
 import {isToday} from './Time';
 import {activities} from '../mocks/Activity';
 import {
+  type MealTypes,
   type FoodTracking,
   type FoodTrackingNutrient,
 } from '../interfaces/health/trackings/FoodTracking';
 import {type Nutrient} from '../interfaces/nutrition/Nutrient';
 import {type Units} from '../interfaces/mealkit/Units';
+import i18n from '../localization/_i18n';
 
 interface TrackingDate {
   date: Date;
@@ -109,4 +111,21 @@ export function calculateActivityCalorie(
 ): number {
   const hour = duration / 60.0;
   return met * hour * weight;
+}
+
+export function getMealType(mealType: MealTypes): string {
+  switch (mealType) {
+    case 'breakfast':
+      return i18n.t('breakfast');
+    case 'morningSnack':
+      return i18n.t('morning-snack');
+    case 'lunch':
+      return i18n.t('lunch');
+    case 'afternoonSnack':
+      return i18n.t('afternoon-snack');
+    case 'eveningSnack':
+      return i18n.t('evening-snack');
+    case 'dinner':
+      return i18n.t('dinner');
+  }
 }

@@ -79,9 +79,22 @@ function Tracking({route, navigation}: TrackingProps): JSX.Element {
     foodTracking: FoodTracking,
     foodTrackingNutrients: FoodTrackingNutrient[],
   ): void {
-    const newFoodTrackings = [...foodTrackings];
-    newFoodTrackings.push(foodTracking);
-    setFoodTrackings(newFoodTrackings);
+    const sameMealType = foodTrackings.find(t => t.meal === foodTracking.meal);
+
+    if (sameMealType === undefined) {
+      const newFoodTrackings = [...foodTrackings];
+      newFoodTrackings.push(foodTracking);
+      setFoodTrackings(newFoodTrackings);
+    }
+  }
+
+  function onFoodTrackDelete(foodTracking: FoodTracking): void {
+    const index = foodTrackings.findIndex(t => t.id === foodTracking.id);
+
+    if (index !== -1) {
+      foodTrackings.splice(index, 1);
+      setFoodTrackings([...foodTrackings]);
+    }
   }
 
   function onActivitiyTrack(activityTracking: ActivityTracking): void {
@@ -113,10 +126,12 @@ function Tracking({route, navigation}: TrackingProps): JSX.Element {
       water={water}
       burnedCalorie={burnedCalorie}
       dailyCalorie={dailyCalorie}
+      foodTrackings={foodTrackings}
       onFoodTrack={onFoodTrack}
       onActivitiyTrack={onActivitiyTrack}
       onWeightTrack={onWeightTrack}
       onWaterTrack={onWaterTrack}
+      deleteFoodTrackings={onFoodTrackDelete}
     />
   );
 }

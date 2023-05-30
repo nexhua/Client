@@ -118,5 +118,7 @@
   "diseases": "Diseases",
   "lose-weight": "Lose Weight",
   "gain-weight": "Gain Weight",
-  "build-muscle": "Build Muscle"
+  "build-muscle": "Build Muscle",
+  "not-tracked-warning": "Not Yet Tracked",
+  "food-trackings": "Food Trackings"
 }

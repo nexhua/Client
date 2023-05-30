@@ -12,6 +12,7 @@ import {
   type MealTypes,
   type FoodTracking,
   type FoodTrackingNutrient,
+  mealTypeValues,
 } from '../interfaces/health/trackings/FoodTracking';
 import NutrientDataTable from '../components/common/NutrientDataTable';
 import {getUser} from '../services/auth/Auth';
@@ -19,6 +20,7 @@ import {Picker} from '@react-native-picker/picker';
 import {type FoodNutrient} from '../interfaces/nutrition/FoodNutrient';
 import {type Nutrient} from '../interfaces/nutrition/Nutrient';
 import {type Units} from '../interfaces/mealkit/Units';
+import {getMealType} from '../util/Tracking';
 
 export interface FoodDetailProps {
   visible: boolean;
@@ -28,6 +30,7 @@ export interface FoodDetailProps {
     foodTrackingNutrients: FoodTrackingNutrient[],
   ) => void;
   foundFood: FoundFood;
+  mealType: MealTypes;
   referenceAmount: number;
   referenceUnitId: number;
 }
@@ -38,7 +41,11 @@ function FoodDetailModal(props: FoodDetailProps): JSX.Element {
     props.foundFood.foodUnits[0],
   );
   const [rate, setRate] = React.useState(1.0);
-  const [mealType, setMealType] = React.useState<MealTypes>('breakfast');
+  const [mealType, setMealType] = React.useState<MealTypes>(props.mealType);
+
+  React.useEffect(() => {
+    setMealType(props.mealType);
+  }, [props.mealType]);
 
   const theme = useAppTheme();
 
@@ -158,21 +165,11 @@ function FoodDetailModal(props: FoodDetailProps): JSX.Element {
                 style={{
                   backgroundColor: theme.colors.surfaceVariant,
                 }}>
-                <Picker.Item label={i18n.t('breakfast')} value={'breakfast'} />
-                <Picker.Item
-                  label={i18n.t('morning-snack')}
-                  value={'morningSnack'}
-                />
-                <Picker.Item label={i18n.t('lunch')} value={'lunch'} />
-                <Picker.Item
-                  label={i18n.t('afternoon-snack')}
-                  value={'afternoonSnack'}
-                />
-                <Picker.Item
-                  label={i18n.t('evening-snack')}
-                  value={'eveningSnack'}
-                />
-                <Picker.Item label={i18n.t('dinner')} value={'dinner'} />
+                {mealTypeValues.map((m, i) => {
+                  return (
+                    <Picker.Item key={i} label={getMealType(m)} value={m} />
+                  );
+                })}
               </Picker>
             </View>
 

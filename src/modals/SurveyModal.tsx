@@ -43,8 +43,12 @@ const surveys: Array<SurveyComponent<any>> = [
 ];
 
 function SurveyModal(props: SurveyModalProps): JSX.Element {
-  const [active, setActive] = React.useState('0');
+  const [active, setActive] = React.useState('1');
   const [component, setComponent] = React.useState<JSX.Element>(<></>);
+
+  React.useEffect(() => {
+    activateSurvey('1');
+  }, []);
 
   const theme = useAppTheme();
 

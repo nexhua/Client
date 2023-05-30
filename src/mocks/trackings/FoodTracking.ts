@@ -22,13 +22,13 @@ export const foodTrackings: FoodTracking[] = [
     foodId: 50,
     personId: 15,
     computedUnitId: 'g',
-    computedValue: 3,
+    computedValue: 1,
     createdAt: new Date(),
     date: new Date(),
     foodName: 'Beef',
     meal: 'lunch',
     unitId: 8,
-    value: 2,
+    value: 5,
   },
 ];
 
@@ -85,7 +85,7 @@ export const foodTrackingNutrients: FoodTrackingNutrient[] = [
     id: 8,
     nutrientId: 1,
     trackingId: 1,
-    amount: 2,
+    amount: 20,
   },
   {
     id: 9,
@@ -97,7 +97,7 @@ export const foodTrackingNutrients: FoodTrackingNutrient[] = [
     id: 10,
     nutrientId: 3,
     trackingId: 1,
-    amount: 10,
+    amount: 100,
   },
   {
     id: 11,

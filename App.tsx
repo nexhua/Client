@@ -21,6 +21,7 @@ import i18n from './src/localization/_i18n';
 import {enGB, tr, registerTranslation} from 'react-native-paper-dates';
 
 import {ApiClient, ApiProvider} from 'jsonapi-react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 registerTranslation('en-GB', enGB);
 registerTranslation('tr', tr);
@@ -49,7 +50,7 @@ const schema = {
 
 const client = new ApiClient({
   url: 'http://192.168.0.14:37001',
-  schema: schema,
+  schema,
 });
 
 function App(): JSX.Element {
@@ -85,41 +86,43 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <ApiProvider client={client}>
-      <PreferencesContext.Provider value={preferences}>
-        <PaperProvider theme={theme}>
-          <NavigationContainer theme={theme}>
-            <Stack.Navigator initialRouteName="SignIn">
-              {user === null ? (
-                <>
-                  <Stack.Screen
-                    name="SignUp"
-                    component={SignUp}
-                    options={{
-                      title: i18n.t('sign-up'),
-                      headerTitleAlign: 'center',
-                    }}
-                  />
-                  <Stack.Screen
-                    name="SignIn"
-                    component={SignIn}
-                    options={{headerShown: false}}
-                  />
-                </>
-              ) : (
-                <>
-                  <Stack.Screen
-                    name="Main"
-                    component={Main}
-                    options={{headerShown: false}}
-                  />
-                </>
-              )}
-            </Stack.Navigator>
-          </NavigationContainer>
-        </PaperProvider>
-      </PreferencesContext.Provider>
-    </ApiProvider>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <ApiProvider client={client}>
+        <PreferencesContext.Provider value={preferences}>
+          <PaperProvider theme={theme}>
+            <NavigationContainer theme={theme}>
+              <Stack.Navigator initialRouteName="SignIn">
+                {user === null ? (
+                  <>
+                    <Stack.Screen
+                      name="SignUp"
+                      component={SignUp}
+                      options={{
+                        title: i18n.t('sign-up'),
+                        headerTitleAlign: 'center',
+                      }}
+                    />
+                    <Stack.Screen
+                      name="SignIn"
+                      component={SignIn}
+                      options={{headerShown: false}}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Stack.Screen
+                      name="Main"
+                      component={Main}
+                      options={{headerShown: false}}
+                    />
+                  </>
+                )}
+              </Stack.Navigator>
+            </NavigationContainer>
+          </PaperProvider>
+        </PreferencesContext.Provider>
+      </ApiProvider>
+    </GestureHandlerRootView>
   );
 }
 

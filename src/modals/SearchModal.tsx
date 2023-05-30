@@ -6,11 +6,13 @@ import {View} from 'react-native';
 import {type FoundFood} from '../interfaces/tracking/FoundFood';
 import {foundFood as mockFoundFood} from '../mocks/FoundFood';
 import {useQuery} from 'jsonapi-react-native';
+import {type MealTypes} from '../interfaces/health/trackings/FoodTracking';
 
 export interface SearchModalProps {
   visible: boolean;
   onDismiss: () => void;
-  onSearchResult: (food: FoundFood) => void;
+  onSearchResult: (food: FoundFood, mealType: MealTypes) => void;
+  trackFor: MealTypes;
 }
 
 function SearchModal(props: SearchModalProps): JSX.Element {
@@ -55,7 +57,7 @@ function SearchModal(props: SearchModalProps): JSX.Element {
 
       <Button
         onPress={() => {
-          props.onSearchResult(foundFood);
+          props.onSearchResult(foundFood, props.trackFor);
         }}>
         assume found
       </Button>

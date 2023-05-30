@@ -118,5 +118,7 @@
   "diseases": "Hastalıklarınız",
   "lose-weight": "Kilo Ver",
   "gain-weight": "Kilo Al",
-  "build-muscle": "Kas Yap"
+  "build-muscle": "Kas Yap",
+  "not-tracked-warning": "Henüz Yemek Takibi Yapılmamış",
+  "food-trackings": "Yemek Takipleriniz"
 }

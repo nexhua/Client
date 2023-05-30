@@ -26,6 +26,15 @@ export interface FoodTrackingNutrient {
   amount: number;
 }
 
+export const mealTypeValues = [
+  'breakfast',
+  'morningSnack',
+  'lunch',
+  'afternoonSnack',
+  'eveningSnack',
+  'dinner',
+] as const;
+
 export type MealTypes =
   | 'breakfast'
   | 'morningSnack'

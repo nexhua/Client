@@ -14,8 +14,9 @@ function TrackingButton(props: TrackingButtonProps): JSX.Element {
       <Button
         style={{paddingEnd: 0}}
         mode="text"
-        onPress={() => {
+        onPress={e => {
           props.onPress();
+          e.stopPropagation();
         }}
         labelStyle={{
           fontSize: 26,

@@ -14,11 +14,12 @@ import {
 import {type WeightTracking} from '../interfaces/health/trackings/WeightTracking';
 import {type WaterTracking} from '../interfaces/health/trackings/WaterTracking';
 import {type ActivityTracking} from '../interfaces/health/trackings/ActivityTracking';
-import {type Person} from '../interfaces/health/Person';
-import {ActivityIndicator} from 'react-native-paper';
+import {type TrackingTypes, type Person} from '../interfaces/health/Person';
+import {ActivityIndicator, Portal} from 'react-native-paper';
 import {
   type FoodTrackingNutrient,
   type FoodTracking,
+  type FoodTrackingInfo,
 } from '../interfaces/health/trackings/FoodTracking';
 import {
   foodTrackingNutrients as mockFoodTrackingNutrients,
@@ -26,6 +27,13 @@ import {
 } from '../mocks/trackings/FoodTracking';
 import {nutritionsExcessive as mockNutritions} from '../mocks/Nutrition';
 import {units as mockUnits} from '../mocks/Unit';
+import {View} from 'react-native';
+import ChartModal from '../modals/ChartModal';
+import CalorieChartView from '../components/tracking/CalorieChartView';
+import i18n from '../localization/_i18n';
+import BurnedCalorieChartView from '../components/tracking/BurnedCalorieChartView';
+import WeightChartView from '../components/tracking/WeightChartView';
+import WaterChartView from '../components/tracking/WaterChartView';
 
 function Tracking({route, navigation}: TrackingProps): JSX.Element {
   const [initialized, setInitialized] = React.useState(false);
@@ -46,6 +54,12 @@ function Tracking({route, navigation}: TrackingProps): JSX.Element {
   const [water, setWater] = React.useState(calculateWater(waterTrackings));
   const [burnedCalorie, setBurnedCalorie] = React.useState(0.0);
   const [dailyCalorie, setDailyCalorie] = React.useState(0.0);
+
+  const [chartModalVisible, setChartModalVisible] = React.useState(false);
+  const [chartComponent, setChartComponent] = React.useState<JSX.Element>(
+    <></>,
+  );
+  const [chartTitle, setChartTitle] = React.useState('');
 
   React.useEffect(() => {
     // On component mount
@@ -115,24 +129,81 @@ function Tracking({route, navigation}: TrackingProps): JSX.Element {
     setWaterTrackings(newWaterTrackings);
   }
 
+  function onChartTypeSelect(chart: TrackingTypes): void {
+    setChartModalVisible(true);
+    setChartComponent(getChartComponent(chart));
+    setChartTitle(getTitle(chart));
+  }
+
+  function getChartComponent(chart: TrackingTypes): JSX.Element {
+    switch (chart) {
+      case 'calorie':
+        return (
+          <CalorieChartView
+            person={person}
+            trackingInfos={foodTrackings.map(t => createFoodTrackingInfos(t))}
+            units={mockUnits}
+          />
+        );
+      case 'burned-calorie':
+        return (
+          <BurnedCalorieChartView
+            trackings={activityTrackings}
+            weight={weight}
+          />
+        );
+      case 'weight':
+        return <WeightChartView trackings={weightTrackings} />;
+      case 'water':
+        return <WaterChartView trackings={waterTrackings} />;
+    }
+  }
+
+  function getTitle(chart: TrackingTypes): string {
+    switch (chart) {
+      case 'calorie':
+        return i18n.t('calorie-trackings');
+      case 'burned-calorie':
+        return i18n.t('burned-calorie-trackings');
+      case 'weight':
+        return i18n.t('weight-trackings');
+      case 'water':
+        return i18n.t('water-trackings');
+    }
+  }
+
   if (!initialized || person === undefined) {
     return <ActivityIndicator size={'large'} />;
   }
 
   return (
-    <TrackingView
-      person={person}
-      weight={weight}
-      water={water}
-      burnedCalorie={burnedCalorie}
-      dailyCalorie={dailyCalorie}
-      foodTrackings={foodTrackings}
-      onFoodTrack={onFoodTrack}
-      onActivitiyTrack={onActivitiyTrack}
-      onWeightTrack={onWeightTrack}
-      onWaterTrack={onWaterTrack}
-      deleteFoodTrackings={onFoodTrackDelete}
-    />
+    <View>
+      <TrackingView
+        person={person}
+        weight={weight}
+        water={water}
+        burnedCalorie={burnedCalorie}
+        dailyCalorie={dailyCalorie}
+        foodTrackings={foodTrackings}
+        onFoodTrack={onFoodTrack}
+        onActivitiyTrack={onActivitiyTrack}
+        onWeightTrack={onWeightTrack}
+        onWaterTrack={onWaterTrack}
+        deleteFoodTrackings={onFoodTrackDelete}
+        onChartSelect={onChartTypeSelect}
+      />
+
+      <Portal>
+        <ChartModal
+          visible={chartModalVisible}
+          onDismiss={() => {
+            setChartModalVisible(false);
+          }}
+          component={chartComponent}
+          title={chartTitle}
+        />
+      </Portal>
+    </View>
   );
 }
 
@@ -174,6 +245,14 @@ function calculateBurnedCalorie(
   return todayAll<ActivityTracking>(activityTrackings)
     .map(tracking => calorieHelper(tracking, weight))
     .reduce((prev, cur) => prev + cur, 0.0);
+}
+
+function createFoodTrackingInfos(tracking: FoodTracking): FoodTrackingInfo {
+  return {
+    tracking,
+    trackingNutrients: mockFoodTrackingNutrients,
+    nutrients: mockNutritions,
+  } satisfies FoodTrackingInfo;
 }
 
 export default Tracking;

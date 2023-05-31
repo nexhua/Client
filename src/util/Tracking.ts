@@ -5,6 +5,7 @@ import {
   type MealTypes,
   type FoodTracking,
   type FoodTrackingNutrient,
+  type MacroTypes,
 } from '../interfaces/health/trackings/FoodTracking';
 import {type Nutrient} from '../interfaces/nutrition/Nutrient';
 import {type Units} from '../interfaces/mealkit/Units';
@@ -128,4 +129,51 @@ export function getMealType(mealType: MealTypes): string {
     case 'dinner':
       return i18n.t('dinner');
   }
+}
+
+export function getMacroName(type: MacroTypes): string {
+  switch (type) {
+    case 'carb-ratio':
+      return 'Carbohydrate';
+    case 'fat-ratio':
+      return 'fat';
+    case 'protein-ratio':
+      return 'protein';
+    case 'fiber-ratio':
+      return 'Fiber';
+  }
+}
+
+export function getMealRatioName(mealType: MealTypes): string {
+  switch (mealType) {
+    case 'breakfast':
+      return i18n.t('breakfast-ratio');
+    case 'morningSnack':
+      return i18n.t('morning-snack-ratio');
+    case 'lunch':
+      return i18n.t('lunch-ratio');
+    case 'afternoonSnack':
+      return i18n.t('afternoon-snack-ratio');
+    case 'eveningSnack':
+      return i18n.t('evening-snack-ratio');
+    case 'dinner':
+      return i18n.t('dinner-ratio');
+  }
+}
+
+export function groupBy<T>(
+  list: T[],
+  keyGetter: (item: T) => string,
+): Map<string, [T]> {
+  const map = new Map<string, [T]>();
+  list.forEach(item => {
+    const key = keyGetter(item);
+    const collection = map.get(key);
+    if (collection === undefined) {
+      map.set(key, [item]);
+    } else {
+      collection.push(item);
+    }
+  });
+  return map;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {type Person} from '../../interfaces/health/Person';
+import {type TrackingTypes, type Person} from '../../interfaces/health/Person';
 import {ScrollView, View} from 'react-native';
 import {Portal} from 'react-native-paper';
 import TrackingCard from '../../components/tracking/TrackingCard';
@@ -36,6 +36,7 @@ export interface TrackingViewProps {
   onWeightTrack: (weightTracking: WeightTracking) => void;
   onWaterTrack: (waterTracking: WaterTracking) => void;
   deleteFoodTrackings: (tracking: FoodTracking) => void;
+  onChartSelect: (trackingType: TrackingTypes) => void;
 }
 
 // Delay for the circular bar animation
@@ -135,6 +136,8 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
             })}
             layout="horizontal"
             hasSpinner={false}
+            name="calorie"
+            onPress={props.onChartSelect}
             circularBarProps={{
               radius: 50,
               strokeWidth: 12,
@@ -167,6 +170,8 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
             })}
             layout="horizontal"
             hasSpinner={false}
+            name="burned-calorie"
+            onPress={props.onChartSelect}
             circularBarProps={{
               radius: 50,
               strokeWidth: 12,
@@ -205,6 +210,8 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
             text={i18n.t('track-weight')}
             layout="vertical"
             hasSpinner={true}
+            name="weight"
+            onPress={props.onChartSelect}
             spinner={
               <InputSpinner
                 inputProps={{}}
@@ -245,6 +252,8 @@ function TrackingView(props: TrackingViewProps): JSX.Element {
             text={i18n.t('track-weight')}
             layout="vertical"
             hasSpinner={true}
+            name="water"
+            onPress={props.onChartSelect}
             spinner={
               <InputSpinner
                 inputProps={{}}

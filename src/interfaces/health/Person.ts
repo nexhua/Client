@@ -59,3 +59,5 @@ export const MaingGoalValues = [
   'buildMuscle',
 ] as const;
 export type MainGoals = 'lostWeight' | 'gainWeight' | 'buildMuscle';
+
+export type TrackingTypes = 'calorie' | 'burned-calorie' | 'weight' | 'water';

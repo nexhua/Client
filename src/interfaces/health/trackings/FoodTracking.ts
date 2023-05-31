@@ -1,3 +1,11 @@
+import {type Nutrient} from '../../nutrition/Nutrient';
+
+export interface FoodTrackingInfo {
+  tracking: FoodTracking;
+  trackingNutrients: FoodTrackingNutrient[];
+  nutrients: Nutrient[];
+}
+
 // Table: health.foodTrackings
 // https://dbdocs.io/mstf.nesin/ProjectGazi?table=foodTrackings&schema=health&view=table_structure
 
@@ -42,3 +50,16 @@ export type MealTypes =
   | 'afternoonSnack'
   | 'eveningSnack'
   | 'dinner';
+
+export const macroTypeValues = [
+  'carb-ratio',
+  'fat-ratio',
+  'protein-ratio',
+  'fiber-ratio',
+] as const;
+
+export type MacroTypes =
+  | 'carb-ratio'
+  | 'fat-ratio'
+  | 'protein-ratio'
+  | 'fiber-ratio';

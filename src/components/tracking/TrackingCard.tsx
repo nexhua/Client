@@ -1,9 +1,10 @@
 import React from 'react';
 import {Surface, Text} from 'react-native-paper';
 import {useAppTheme} from '../../style/Theme';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, TouchableWithoutFeedback, View} from 'react-native';
 import CircularBar, {type CircularBarProps} from './CircularBar';
 import TrackingButton, {type TrackingButtonProps} from './TrackingButton';
+import {type TrackingTypes} from '../../interfaces/health/Person';
 
 interface TrackingCardProps {
   title: string;
@@ -12,6 +13,8 @@ interface TrackingCardProps {
   circularBarProps: CircularBarProps;
   trackingButtonProps?: TrackingButtonProps;
   hasSpinner: boolean;
+  name: TrackingTypes;
+  onPress: (type: TrackingTypes) => void;
   spinner?: JSX.Element;
 }
 
@@ -19,38 +22,43 @@ function TrackingCard(props: TrackingCardProps): JSX.Element {
   const theme = useAppTheme();
 
   return (
-    <View
-      style={{
-        width: props.layout === 'horizontal' ? '100%' : '45%',
+    <TouchableWithoutFeedback
+      onPress={() => {
+        props.onPress(props.name);
       }}>
-      <Text style={style.title} variant="headlineSmall">
-        {props.title}
-      </Text>
-      <Surface
-        elevation={5}
+      <View
         style={{
-          ...style.container,
-          backgroundColor: theme.colors.surfaceVariant,
-          flexDirection: props.layout === 'horizontal' ? 'row' : 'column',
+          width: props.layout === 'horizontal' ? '100%' : '45%',
         }}>
-        <CircularBar {...props.circularBarProps} />
-        {props.layout === 'horizontal' && (
-          <View style={{flex: 1}}>
-            <Text variant="bodyLarge">{props.text}</Text>
-          </View>
-        )}
-        {props.layout === 'vertical' && props.hasSpinner && (
-          <View style={{marginBottom: '5%'}}>{props.spinner}</View>
-        )}
-        {props.trackingButtonProps !== undefined && (
-          <TrackingButton
-            color={props.circularBarProps.color}
-            onPress={props.trackingButtonProps.onPress}
-            initialValue={props.trackingButtonProps.initialValue}
-          />
-        )}
-      </Surface>
-    </View>
+        <Text style={style.title} variant="headlineSmall">
+          {props.title}
+        </Text>
+        <Surface
+          elevation={5}
+          style={{
+            ...style.container,
+            backgroundColor: theme.colors.surfaceVariant,
+            flexDirection: props.layout === 'horizontal' ? 'row' : 'column',
+          }}>
+          <CircularBar {...props.circularBarProps} />
+          {props.layout === 'horizontal' && (
+            <View style={{flex: 1}}>
+              <Text variant="bodyLarge">{props.text}</Text>
+            </View>
+          )}
+          {props.layout === 'vertical' && props.hasSpinner && (
+            <View style={{marginBottom: '5%'}}>{props.spinner}</View>
+          )}
+          {props.trackingButtonProps !== undefined && (
+            <TrackingButton
+              color={props.circularBarProps.color}
+              onPress={props.trackingButtonProps.onPress}
+              initialValue={props.trackingButtonProps.initialValue}
+            />
+          )}
+        </Surface>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 

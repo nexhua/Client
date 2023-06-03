@@ -37,7 +37,7 @@ function GoalSurvey(props: GoalSurveyProps): JSX.Element {
   return (
     <View style={style.container}>
       <Text style={style.title} variant="titleLarge">
-        {i18n.t('weight-goal')}
+        {i18n.t('select-goal')}
       </Text>
 
       <View style={style.cardContainer}>

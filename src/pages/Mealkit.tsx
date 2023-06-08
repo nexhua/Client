@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import RecipeCard from '../components/mealkit/RecipeCard';
-import {recipe, instructions} from '../mocks/Recipe';
+import {recipe, instructions, recipe0, recipe1, recipe2} from '../mocks/Recipe';
 import Product from '../components/common/Product';
 import {type Recipe} from '../interfaces/mealkit/Recipe';
 import RecipeDetailModal from '../modals/RecipeDetailModal';
@@ -19,12 +19,11 @@ function Mealkit(): JSX.Element {
 
   React.useEffect(() => {
     const fetchedRecipes: Array<Product<Recipe>> = [];
-    for (let i = 0; i < 10; i++) {
-      // TO DO: Remove this logic when actual fetch happens
-      const newRecipe = {...recipe};
-      newRecipe.id += i;
-      fetchedRecipes.push(new Product<Recipe>(newRecipe, 0));
-    }
+
+    fetchedRecipes.push(new Product<Recipe>(recipe, 0));
+    fetchedRecipes.push(new Product<Recipe>(recipe0, 0));
+    fetchedRecipes.push(new Product<Recipe>(recipe1, 0));
+    fetchedRecipes.push(new Product<Recipe>(recipe2, 0));
 
     setRecipes(fetchedRecipes);
   }, []);
@@ -78,7 +77,7 @@ function Mealkit(): JSX.Element {
           return (
             <RecipeCard
               key={`${elem.product.id}_${elem.amount}_${i}`}
-              recipe={recipe}
+              recipe={elem.product}
               amount={elem.amount}
               onPress={() => {
                 setRecipeDetail(elem.product);

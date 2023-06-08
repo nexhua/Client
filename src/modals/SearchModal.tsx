@@ -1,5 +1,5 @@
 import React from 'react';
-import {Appbar, Button, Modal, Searchbar} from 'react-native-paper';
+import {Appbar, Chip, Modal, Searchbar} from 'react-native-paper';
 import {useAppTheme} from '../style/Theme';
 import i18n from '../localization/_i18n';
 import {View} from 'react-native';
@@ -55,12 +55,13 @@ function SearchModal(props: SearchModalProps): JSX.Element {
         />
       </View>
 
-      <Button
+      <Chip
+        style={{backgroundColor: theme.colors.muted, margin: '5%'}}
         onPress={() => {
           props.onSearchResult(foundFood, props.trackFor);
         }}>
-        assume found
-      </Button>
+        {foundFood.food.name}
+      </Chip>
     </Modal>
   );
 }

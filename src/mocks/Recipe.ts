@@ -37,6 +37,72 @@ export const recipe: Recipe = {
   totalTime: 25,
 };
 
+export const recipe0: Recipe = {
+  id: 5041,
+  authorId: 24,
+  foodId: 21,
+  mainCategoryId: 52,
+  mainCuisineId: 2,
+  createdAt: new Date(),
+  description:
+    'For this fajita-inspired meal, our chefs thought outside the box—errr, tortilla—to create some epic bowls. You’ll start with buttery rice, saucy spiced pork, and sautéed peppers and onions, then jazz things up with Monterey Jack cheese, pico de gallo, chili lime crema, and blue corn tortilla chips. Go wild when you assemble your bowl—that’s the beauty of making it yourself!',
+  difficulty: 3,
+  imageUrl:
+    'https://img.hellofresh.com/c_fit,f_auto,fl_lossy,h_500,q_30,w_1900/hellofresh_s3/image/64528ee3c8c93498cd0f31f2-0adb8526.jpg',
+  isAvailable: true,
+  isDeliverable: true,
+  isVisible: true,
+  name: 'Cheesy Spinach',
+  price: 28.99,
+  servings: 5,
+  servingSize: 7,
+  totalTime: 30,
+};
+
+export const recipe1: Recipe = {
+  id: 2451,
+  authorId: 24,
+  foodId: 21,
+  mainCategoryId: 52,
+  mainCuisineId: 2,
+  createdAt: new Date(),
+  description:
+    'For this fajita-inspired meal, our chefs thought outside the box—errr, tortilla—to create some epic bowls. You’ll start with buttery rice, saucy spiced pork, and sautéed peppers and onions, then jazz things up with Monterey Jack cheese, pico de gallo, chili lime crema, and blue corn tortilla chips. Go wild when you assemble your bowl—that’s the beauty of making it yourself!',
+  difficulty: 3,
+  imageUrl:
+    'https://img.hellofresh.com/c_fit,f_auto,fl_lossy,h_500,q_30,w_1900/hellofresh_s3/image/645120c19aefbdba5707ce50-eba39f47.jpg',
+  isAvailable: true,
+  isDeliverable: true,
+  isVisible: true,
+  name: 'Chicken Sausage Spaghetti',
+  price: 19.99,
+  servings: 3,
+  servingSize: 8,
+  totalTime: 20,
+};
+
+export const recipe2: Recipe = {
+  id: 6587,
+  authorId: 24,
+  foodId: 21,
+  mainCategoryId: 52,
+  mainCuisineId: 2,
+  createdAt: new Date(),
+  description:
+    'For this fajita-inspired meal, our chefs thought outside the box—errr, tortilla—to create some epic bowls. You’ll start with buttery rice, saucy spiced pork, and sautéed peppers and onions, then jazz things up with Monterey Jack cheese, pico de gallo, chili lime crema, and blue corn tortilla chips. Go wild when you assemble your bowl—that’s the beauty of making it yourself!',
+  difficulty: 3,
+  imageUrl:
+    'https://img.hellofresh.com/c_fit,f_auto,fl_lossy,h_500,q_30,w_1900/hellofresh_s3/image/smoky-bbq-bean-rice-bowls-31e0efa6.jpg',
+  isAvailable: true,
+  isDeliverable: true,
+  isVisible: true,
+  name: 'Smoky BBQ',
+  price: 29.59,
+  servings: 4,
+  servingSize: 8,
+  totalTime: 10,
+};
+
 export const recipeUtensils: RecipeUtensils[] = [
   {
     recipeId: 2131,
